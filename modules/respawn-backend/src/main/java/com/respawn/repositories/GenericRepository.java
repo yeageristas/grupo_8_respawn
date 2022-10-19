@@ -1,4 +1,4 @@
-package com.respawn;
+package com.respawn.repositories;
 
 import com.respawn.entities.GenericModel;
 import org.springframework.data.jpa.repository.JpaRepository;
