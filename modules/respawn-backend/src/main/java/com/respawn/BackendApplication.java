@@ -1,4 +1,4 @@
-package com.respawn.backend;
+package com.respawn;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
