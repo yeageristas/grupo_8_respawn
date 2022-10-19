@@ -1,6 +1,6 @@
 package com.respawn.services;
 
-import com.respawn.GenericRepository;
+import com.respawn.repositories.GenericRepository;
 import com.respawn.entities.GenericModel;
 import com.respawn.transactional_services.GenericTransactionalService;
 import org.springframework.transaction.annotation.Transactional;
