@@ -1,13 +1,13 @@
 package com.respawn.entities;
 
 import lombok.Getter;
-import org.springframework.context.annotation.EnableMBeanExport;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
 
 @Entity
 @Getter
+@Audited
 public class Pais extends GenericModel {
     String nombre;
 }
