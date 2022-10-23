@@ -1,7 +1,7 @@
 package com.respawn.entities;
 
-import lombok.Getter;
-import lombok.Setter;
+import com.respawn.dto.CreateUsuarioRequest;
+import lombok.*;
 import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
@@ -11,6 +11,9 @@ import java.util.Date;
 @Getter
 @Setter
 @Audited
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Usuario extends GenericModel {
     private String email;
     private String password;
@@ -20,4 +23,16 @@ public class Usuario extends GenericModel {
     private Pais pais;
     @Enumerated(EnumType.STRING)
     private Rol rol;
+
+    // i feel like i'll use this too
+    static Usuario of(CreateUsuarioRequest createUsuarioRequest) {
+        return Usuario.builder()
+                .email(createUsuarioRequest.getEmail())
+                .password(createUsuarioRequest.getPassword())
+                .nombreApellido(createUsuarioRequest.getNombreApellido())
+                .fechaNacimiento(createUsuarioRequest.getFechaNacimiento())
+                .pais(createUsuarioRequest.getPais())
+                .rol(createUsuarioRequest.getRol())
+                .build();
+    }
 }
