@@ -19,7 +19,7 @@ public class Usuario extends GenericModel {
     private String password;
     private String nombreApellido;
     private Date fechaNacimiento;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Pais pais;
     @Enumerated(EnumType.STRING)
     private Rol rol;
