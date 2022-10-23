@@ -9,6 +9,7 @@ import javax.persistence.*;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Getter
@@ -20,7 +21,7 @@ public class Pedido extends GenericModel {
     private int numeroPedido;
 
     @OneToMany
-    private ArrayList<PedidoDetalle> listaPedidoDetalle;
+    private List<PedidoDetalle> listaPedidoDetalle;
     @ManyToOne
     private EstadoPedido estadoPedido;
     @ManyToOne
