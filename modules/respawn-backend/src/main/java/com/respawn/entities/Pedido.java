@@ -7,7 +7,6 @@ import org.hibernate.envers.Audited;
 import javax.persistence.Entity;
 import javax.persistence.*;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 

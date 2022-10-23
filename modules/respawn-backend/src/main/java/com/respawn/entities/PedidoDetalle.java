@@ -14,6 +14,6 @@ public class PedidoDetalle extends GenericModel {
     private int cantidad;
     private double montoSubtotal;
 
-    // @ManyToOne
-    // private Juego juego;
+    @ManyToOne
+    private Juego juego;
 }
