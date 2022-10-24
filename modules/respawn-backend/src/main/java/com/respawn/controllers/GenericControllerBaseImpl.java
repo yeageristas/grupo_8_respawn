@@ -34,11 +34,11 @@ public abstract class GenericControllerBaseImpl<E extends GenericModel, S extend
     @GetMapping("/{id}")
     public ResponseEntity<?> find(@PathVariable("id") Long id) {
         try {
-            var personaOpt = this.service.findById(id);
-            if(personaOpt.isPresent()) {
-                return ResponseEntity.status(HttpStatus.OK).body(personaOpt.get());
+            var entityOpt = this.service.findById(id);
+            if(entityOpt.isPresent()) {
+                return ResponseEntity.status(HttpStatus.OK).body(entityOpt.get());
             } else {
-                throw new Exception(String.format("Person with id %d not found", id));
+                throw new Exception(String.format("Entity with id %d not found", id));
             }
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(String.format("{\"error\":\"%s\"}", ex.getMessage()));

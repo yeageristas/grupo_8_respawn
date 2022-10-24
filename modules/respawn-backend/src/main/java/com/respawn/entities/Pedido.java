@@ -19,10 +19,14 @@ public class Pedido extends GenericModel {
     private double montoTotal;
     private int numeroPedido;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.PERSIST)
     private List<PedidoDetalle> listaPedidoDetalle;
     @ManyToOne
     private EstadoPedido estadoPedido;
     @ManyToOne
     private Usuario usuario;
+    
+    public void addPedidoDetalle(PedidoDetalle pedidoDetalle) {
+        this.listaPedidoDetalle.add(pedidoDetalle);
+    }
 }
