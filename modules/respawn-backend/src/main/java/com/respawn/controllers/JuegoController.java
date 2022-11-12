@@ -1,17 +1,150 @@
 package com.respawn.controllers;
 
 import com.respawn.entities.Juego;
+import com.respawn.services.CategoriaService;
+import com.respawn.services.IdiomaService;
 import com.respawn.services.JuegoService;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.respawn.services.PlataformaService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.imageio.ImageIO;
+import javax.validation.Valid;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Calendar;
+import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping(path = "api/v1/juegos")
 public class JuegoController extends GenericControllerBaseImpl<Juego, JuegoService> {
+    @Autowired
+    private CategoriaService svcCategoria;
+    @Autowired
+    private PlataformaService svcPlataforma;
+    @Autowired
+    private IdiomaService svcIdioma;
 
-    public JuegoController(JuegoService service) {
-        super(service);
+    public JuegoController(JuegoService service) {super(service);}
+
+    //-------------------------------------------------------------------
+    @GetMapping("/inicio")
+    public String inicio(Model model) {
+        try {
+            List<Juego> juegos = this.service.findAllByActivo();
+            model.addAttribute("juego", juegos);
+
+            return "views/inicio";
+        } catch (Exception e) {
+            model.addAttribute("error", e.getMessage());
+            return "error";
+        }
     }
+
+    @GetMapping("/detalle/{id}")
+    public String detalleVideojuego(Model model, @PathVariable("id") long id) {
+        try {
+            Juego juegos = this.service.findByIdAndActivo(id);
+            model.addAttribute("juego",juegos);
+            return "views/detalle";
+        } catch (Exception e) {
+            model.addAttribute("error", e.getMessage());
+            return "error";
+        }
+    }
+    //METODO PARA LA BUSQUEDA
+    @GetMapping(value = "/busqueda")
+    public String busquedaVideojuego(Model model, @RequestParam(value ="query",required = false)String q){
+        try {
+            List<Juego> juegos = this.service.findByTitle(q);
+            model.addAttribute("juego", juegos);
+            model.addAttribute("resultado",q);
+            return "views/busqueda";
+        } catch (Exception e) {
+            model.addAttribute("error", e.getMessage());
+            return "error";
+        }
+    }
+    //VISTA DEL CRUD
+    @GetMapping("/crud")
+    public String crudVideojuego(Model model){
+        try {
+            List<Juego> juegos = this.service.findAll(); //activos y no activos
+            model.addAttribute("juego",juegos);
+            return "views/crud";
+        }catch(Exception e){
+            model.addAttribute("error", e.getMessage());
+            return "error";
+        }
+    }
+    //FORMULARIO DE VIDEOJUEGOS
+    @GetMapping("/formulario/juegos/{id}")
+    public String formularioJuegos(Model model, @PathVariable("id")long id){
+        try {
+            model.addAttribute("categorias",this.svcCategoria.findAll());
+            model.addAttribute("plataformas",this.svcPlataforma.findAll());
+            model.addAttribute("idioma", this.svcIdioma.findAll());
+            if(id==0){
+                model.addAttribute("juego",new Juego());
+            }else{
+                model.addAttribute("juego",this.service.findById(id));
+            }
+            return "views/formulario/juegos";
+        }catch(Exception e){
+            model.addAttribute("error", e.getMessage());
+            return "error";
+        }
+    }
+
+    @PostMapping("/formulario/juegos/{id}")
+    public String guardarJuegos(
+            @Valid @ModelAttribute("videojuego") Juego juego,
+            Model model,@PathVariable("id")long id
+    ) {
+        try {
+            model.addAttribute("categorias",this.svcCategoria.findAll());
+            model.addAttribute("plataformas",this.svcPlataforma.findAll());
+            model.addAttribute("idiomas", this.svcIdioma.findAll());
+            if(id==0){
+                this.service.save(juego); //saveOne -> save
+            }else{
+                this.service.update(id, juego); //updateOne -> update
+            }
+            return "redirect:/crud";
+        }catch(Exception e){
+            model.addAttribute("error", e.getMessage());
+            return "error";
+        }
+    }
+
+    @GetMapping("/eliminar/juego/{id}")
+    public String eliminarJuegos(Model model, @PathVariable("id")long id){
+        try {
+            model.addAttribute("juego",this.service.findById(id));
+            return "views/formulario/eliminar";
+        }catch(Exception e){
+            model.addAttribute("error", e.getMessage());
+            return "error";
+        }
+    }
+
+    @PostMapping("/eliminar/juego/{id}")
+    public String desactivarJuego(Model model, @PathVariable("id")long id){
+        try {
+            this.service.deleteById(id);
+            return "redirect:/crud";
+        }catch(Exception e){
+            model.addAttribute("error", e.getMessage());
+            System.out.println(e);
+            return "error";
+        }
+    }
+
+
 }

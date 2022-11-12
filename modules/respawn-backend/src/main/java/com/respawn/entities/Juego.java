@@ -6,8 +6,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.envers.Audited;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -21,34 +23,44 @@ import java.util.List;
 @Audited
 public class Juego extends GenericModel {
 
+    @NotEmpty(message = "El nombre no puede quedar vacio")
     private String nombre;
+
     private double precioSinDescuento;
+
     private double precioConDescuento;
+
+    @Size(min=10,message= "La descripcion es muy corta")
     private String descripcion;
+
     private int cantidadVentas;
+
     private String imagenPortada;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message="La fecha no puede ser nula")
+    @PastOrPresent(message="La fecha debe ser igual o menor a la fecha actual")
     private Date fechaLanzamiento;
+
     private String tamaño;
+
     private boolean Oferta;
+    private boolean activo = true;
 
     //RELACIONES
-    // relacion con estado
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "fk_estadojuego")
-    private EstadoJuego estadoJuego;
 
     // relacion con categoria
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "fk_categoria")
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @JoinColumn(name = "fk_categoria", nullable = false)
     private Categoria categoria;
 
     // relacion con plataforma
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "fk_plataforma")
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @JoinColumn(name = "fk_plataforma", nullable = false)
     private Plataforma plataforma;
 
     //relacion con idioma
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name= "juego_idioma",
             joinColumns = @JoinColumn(name="juego_id"),
