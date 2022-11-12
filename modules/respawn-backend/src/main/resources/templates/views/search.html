@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Respawn - Resultado de búsqueda</title>
+  <link rel="shortcut icon" type="image/png" th:href="@{/img/respawn_logo.PNG}"/>
+  <link rel="stylesheet" type="text/css" th:href="@{styles/styles.css}">
+</head>
+<body>
+<nav th:replace="components/navbar :: _navbar"></nav>
+
+<main>
+  <div class="search__results__container">
+    <div th:if="${juegos.size}">
+      <div>
+        <h2>Resultados de la búsqueda "<span th:text="${resultado}"></span>": </h2>
+      </div>
+      <div th:each="juego : ${juegos}">
+        <div th:replace="components/card :: _card"></div>
+      </div>
+    </div>
+    <div th:unless="${juegos.size}">
+      <div>
+        <h2>No hay resultados para la búsqueda "<span th:text="${resultado}"></span>".</h2>
+      </div>
+    </div>
+  </div>
+
+  <footer th:replace="components/footer"></footer>
+</main>
+</body>
+</html>

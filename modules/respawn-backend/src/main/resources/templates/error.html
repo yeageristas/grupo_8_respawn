@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Respawn - Error</title>
+  <link rel="shortcut icon" type="image/png" th:href="@{/img/respawn_logo.PNG}"/>
+  <link rel="stylesheet" type="text/css" th:href="@{styles/styles.css}">
+</head>
+<body>
+<nav th:replace="components/navbar :: _navbar"></nav>
+
+<main>
+  <div class="error__container">
+    <div th:if="${error}">
+      <span th:text="${error} + '.'"></span>
+    </div>
+    <div th:unless="${error}">
+      Ha ocurrido un error en la última operación.
+    </div>
+  </div>
+
+  <footer th:replace="components/footer"></footer>
+</main>
+</body>
+</html>
