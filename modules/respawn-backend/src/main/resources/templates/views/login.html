@@ -2,23 +2,30 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Login - Respawn - Tienda de videojuegos</title>
+    <link rel="shortcut icon" type="image/png" th:href="@{/img/respawn_logo.PNG}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{styles/styles.css}">
 </head>
 <body>
-    <div>
-        <form th:action="@{/doLogin}" method="post" style="max-width: 400px; margin: 0 auto;">
-            <p>
-                E-mail: <input type="email" name="email" required />
-            </p>
-            <p>
-                Password: <input type="password" name="password" required />
-            </p>
-            <p>
-                <input type="submit" value="Login" />
-            </p>
-        </form>
+    <nav th:replace="components/navbar :: _navbar"></nav>
+
+    <main>
+        <div class="login__outer_container">
+            <div class="login__container">
+                <form th:action="@{/doLogin}" method="post" style="max-width: 400px; margin: 0 auto;">
+                    <p>
+                        E-mail: <input type="email"  name="email" required />
+                    </p>
+                    <p>
+                        Password: <input type="password" name="password" required />
+                    </p>
+                    <p>
+                        <input type="submit" value="Login" />
+                    </p>
+                </form>
+            </div>
         </div>
+    </main>
+    <footer th:replace="components/footer"></footer>
 </body>
 </html>

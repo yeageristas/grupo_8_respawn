@@ -7,6 +7,7 @@ import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -32,4 +33,17 @@ public class RespawnController {
         return "views/login";
     }
 
+    @GetMapping("/detalle/{:id}")
+    public String detail(Model model, @PathVariable("id") Long id) {
+        try {
+            var juego = this.juegoService.findById(id);
+            if(juego.isPresent()) {
+                model.addAttribute("juego", juego.get());
+                return "views/product-detail.view.html";
+            }
+        } catch (Exception e) {
+            model.addAttribute("error", e.getMessage());
+            return "error";
+        }
+    }
 }

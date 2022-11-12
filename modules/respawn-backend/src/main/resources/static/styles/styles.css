@@ -2,6 +2,7 @@
 
 :root {
     --color-1: #EF4027;
+    --color-2: #191B1B;
 }
 
 * {
@@ -92,4 +93,8 @@ h2 {
 
 .card__precio {
     color: var(--color-1);
+}
+
+.login__container {
+    background-color: var(--color-2);
 }
