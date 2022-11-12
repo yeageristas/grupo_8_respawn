@@ -9,8 +9,8 @@
 <body>
     <nav th:replace="components/navbar :: _navbar"></nav>
         <main>
-            <div>
-
+            <div class="product-detail-container">
+                <div th:replace="componentes/product-detail"></div>
             </div>
             <h2>ÚLTIMOS VENDIDOS</h2>
             <div class="card__container">
@@ -20,20 +20,6 @@
             </div>
             
         </main>
-    <!-- <main>
-        <h2>POPULARES</h2>
-        <div class="card__container">
-            <div th:each="juego : ${juegos}">
-                <div th:replace="components/card :: _card"></div>
-            </div>
-        </div>
-
-        <h2>NOVEDADES</h2>
-        <div class="card__container">
-            <div th:each="juego : ${juegos}">
-                <div th:replace="components/card :: _card"></div>
-            </div>
-        </div>
-    </main> -->
+    <footer th:replace="components/footer"></footer>
 </body>
 </html>
