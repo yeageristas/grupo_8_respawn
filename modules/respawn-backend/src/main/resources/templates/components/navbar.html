@@ -10,5 +10,11 @@
                 <a class="nav__link" th:href="@{/}">Tienda</a>
             </li>
         </ul>
+        <form th:action="@{/search}" class="search__form">
+            <input type="search" placeholder="Buscar un juego" aria-label="Search" name="query">
+            <button type="submit" class="nav__btn">
+                <img th:src="@{/img/search_icon.png}" alt="Búsqueda" id="search_icon">
+            </button>
+        </form>
     </div>
 </nav>

@@ -7,6 +7,7 @@ import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
@@ -40,10 +41,26 @@ public class RespawnController {
             if(juego.isPresent()) {
                 model.addAttribute("juego", juego.get());
                 return "views/product-detail.view.html";
+            } else {
+                return "";
             }
+    
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
             return "error";
         }
     }
+    @GetMapping(value = "/search")
+    public String busquedaJuego(Model model, @RequestParam(value ="query", required = false)String q) {
+        try {
+            List<Juego> juegos = this.juegoService.findByTitle(q);
+            model.addAttribute("juegos", juegos);
+            model.addAttribute("resultado", q);
+            return "views/search";
+        } catch (Exception e) {
+            model.addAttribute("error", e.getMessage());
+            return "error";
+        }
+    }
+
 }

@@ -16,6 +16,9 @@ html {
 
 body {
     font-family: 'Gothic A1', sans-serif;
+    min-height: 100%;
+    position: relative;
+    padding-bottom: 98px;
 }
 
 nav {
@@ -24,7 +27,12 @@ nav {
 }
 
 footer {
-    background-color: #EF4027;
+    background-color: var(--color-1);
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 98px;
 }
 
 .nav__container {
@@ -41,7 +49,8 @@ footer {
     padding: 5px;
 }
 
-.nav__sections {
+.nav__sections,
+.search__form {
     display: flex;
     align-items: center;
 }
@@ -64,12 +73,42 @@ a, a:visited {
     text-decoration: none;
 }
 
+.nav__btn {
+    color: #fff;
+    width: 40px;
+    height: 40px;
+    border-radius: 15px;
+    cursor: pointer;
+    margin: 0 10px;
+    padding: 5px;
+}
+
+.nav__btn:hover {
+    background: #ccc;
+}
+
+#search_icon {
+    width: 23px;
+    height: 23px;
+}
+
 main {
-    padding-top: 120px;
+    padding-top: 100px;
+}
+
+.banner__container {
+    object-fit: contain;
+    width: 100vw;
+}
+
+#banner {
+    width: 100vw;
+    height: 60vh;
+    object-fit: fill;
 }
 
 h2 {
-    margin-left: 25px;
+    margin: 25px 25px;
 }
 
 .card__container {
@@ -93,6 +132,10 @@ h2 {
 
 .card__precio {
     color: var(--color-1);
+}
+
+.error__container {
+    margin: 25px 0;
 }
 
 .login__container {
