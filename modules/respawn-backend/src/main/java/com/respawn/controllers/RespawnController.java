@@ -3,6 +3,7 @@ package com.respawn.controllers;
 import com.respawn.entities.Juego;
 import com.respawn.services.JuegoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +27,10 @@ public class RespawnController {
             model.addAttribute("error", e.getMessage());
             return "error";
         }
+    }
+    @GetMapping("/login")
+    public String loginHandler(@Nullable Model model) {
+        return "views/login";
     }
 
     @GetMapping(value = "/search")
