@@ -15,7 +15,6 @@ import java.util.Optional;
 public class JuegoService extends GenericService<Juego> implements JuegoTransactionalService {
     @Autowired
     private JuegoRepository juegoRepository;
-
     public JuegoService(GenericRepository<Juego> baseRepository){
         super(baseRepository);
     }

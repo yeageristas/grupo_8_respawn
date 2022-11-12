@@ -10,6 +10,10 @@
     <nav th:replace="components/navbar :: _navbar"></nav>
 
     <main>
+        <div class="banner__container">
+            <img th:src="@{img/home_banner.png}" alt="Respawn Banner" id="banner">
+        </div>
+
         <h2>POPULARES</h2>
         <div class="card__container">
             <div th:each="juego : ${juegos}">
@@ -24,5 +28,6 @@
             </div>
         </div>
     </main>
+    <footer th:replace="components/footer"></footer>   
 </body>
 </html>

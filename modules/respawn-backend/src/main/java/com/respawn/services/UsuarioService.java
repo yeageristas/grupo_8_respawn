@@ -7,6 +7,8 @@ import com.respawn.transactional_services.UsuarioTransactionalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UsuarioService extends GenericService<Usuario> implements UsuarioTransactionalService {
 
@@ -15,5 +17,15 @@ public class UsuarioService extends GenericService<Usuario> implements UsuarioTr
 
     public UsuarioService(GenericRepository<Usuario> baseRepository) {
         super(baseRepository);
+    }
+
+    @Override
+    public Optional<Usuario> findByEmail() {
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<Usuario> findByEmail(String email) {
+        return usuarioRepository.getByEmail(email);
     }
 }
