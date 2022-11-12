@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Respawn - Tienda de videojuegos</title>
+    <link rel="shortcut icon" type="image/png" th:href="@{/img/respawn_logo.PNG}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{styles/styles.css}">
+</head>
+<body>
+    <nav th:replace="components/navbar :: _navbar"></nav>
+
+    <main>
+        <h2>POPULARES</h2>
+        <div class="card__container">
+            <div th:each="juego : ${juegos}">
+                <div th:replace="components/card :: _card"></div>
+            </div>
+        </div>
+
+        <h2>NOVEDADES</h2>
+        <div class="card__container">
+            <div th:each="juego : ${juegos}">
+                <div th:replace="components/card :: _card"></div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

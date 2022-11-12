@@ -1,0 +1,11 @@
+<div th:fragment="_card" class="card">
+  <div>
+    <img th:src="${juego.imagenPortada}" alt="Foto de portada del juego" class="card__img">
+  </div>
+  <div>
+    <h5 th:text="${juego.nombre} + ' (' + ${juego.plataforma.nombre} + ')'" class="card__nombre"></h5>
+  </div>
+  <div>
+    <h4 th:text="${juego.precioSinDescuento} + ' ARS'" class="card__precio"></h4>
+  </div>
+</div>
