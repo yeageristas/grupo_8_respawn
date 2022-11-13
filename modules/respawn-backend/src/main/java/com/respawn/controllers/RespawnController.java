@@ -38,11 +38,8 @@ public class RespawnController {
     public String detail(Model model, @PathVariable("id") Long id) {
         try {
             var juego = this.juegoService.findById(id);
-
-                model.addAttribute("juego", juego);
-                return "views/product-detail.view.html";
-
-    
+            model.addAttribute("juego", juego);
+            return "views/product-detail.view.html";
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
             return "error";

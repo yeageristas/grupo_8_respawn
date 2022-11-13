@@ -7,17 +7,10 @@ import com.respawn.services.JuegoService;
 import com.respawn.services.PlataformaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.imageio.ImageIO;
 import javax.validation.Valid;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Calendar;
 import java.util.List;
 
 @RestController
