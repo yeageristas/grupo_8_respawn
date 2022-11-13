@@ -38,15 +38,6 @@ public class SpringSecurity {
         public AuthenticationProvider authenticationProvider() {
             return new CustomAuthenticationProvider();
         }
-
-        @Autowired
-        public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-            auth
-                    .inMemoryAuthentication()
-                    .withUser("user").password("{noop}pass").roles("USER")
-                    .and()
-                    .withUser("admin").password("{noop}pass").roles("ADMIN");
-        }
 }
 
 
