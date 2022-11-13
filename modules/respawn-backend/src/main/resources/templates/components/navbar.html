@@ -1,3 +1,5 @@
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <nav th:fragment="_navbar">
     <div class="nav__container">
         <a th:href="@{/}">
@@ -17,6 +19,9 @@
             </li>
             <li class="nav__item">
                 <a class="nav__link" th:href="@{/}">Nosotros</a>
+            </li>
+            <li class="nav__item" sec:authorize="hasRole('ROLE_ADMINISTRADOR')">
+                <a class="nav__link" th:href="@{/crud}">Gestión de juegos</a>
             </li>
         </ul>
         <form th:action="@{/search}" class="search__form">
