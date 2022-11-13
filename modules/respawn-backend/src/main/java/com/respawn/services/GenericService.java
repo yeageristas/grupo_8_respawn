@@ -6,7 +6,6 @@ import com.respawn.transactional_services.GenericTransactionalService;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 public abstract class GenericService<E extends GenericModel> implements GenericTransactionalService<E, Long> {
 
@@ -24,8 +23,7 @@ public abstract class GenericService<E extends GenericModel> implements GenericT
 
     @Transactional
     public E findById(Long id) throws Exception {
-        Optional<E> opt =baseRepository.findById(id);
-        return opt.get();
+        return this.baseRepository.findById(id);
     }
 
     @Transactional
