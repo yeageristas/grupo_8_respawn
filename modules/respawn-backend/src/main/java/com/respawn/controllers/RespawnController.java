@@ -1,15 +1,14 @@
 package com.respawn.controllers;
 
 import com.respawn.entities.Juego;
-import com.respawn.services.JuegoService;
+import com.respawn.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -17,12 +16,23 @@ public class RespawnController {
 
     @Autowired
     private JuegoService juegoService;
+    @Autowired
+    private AuthenticationService authenticationService;
+    @Autowired
+    private CategoriaService categoriaService;
+    @Autowired
+    private PlataformaService plataformaService;
+    @Autowired
+    private IdiomaService idiomaService;
 
     @GetMapping("/")
     public String home(Model model) {
         try {
             List<Juego> juegos = this.juegoService.findAllByActivo();
+            final String role = authenticationService.getRolesForUser().get(0);
+            System.out.println(role);
             model.addAttribute("juegos", juegos);
+            model.addAttribute("role", role);
             return "views/home";
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
@@ -31,6 +41,10 @@ public class RespawnController {
     }
     @GetMapping("/login")
     public String loginHandler(@Nullable Model model) {
+        if (authenticationService.isLoggedIn()) {
+            authenticationService.getRolesForUser().forEach(System.out::println);
+            return "redirect:/";
+        }
         return "views/login";
     }
 
@@ -38,7 +52,9 @@ public class RespawnController {
     public String detail(Model model, @PathVariable("id") Long id) {
         try {
             var juego = this.juegoService.findById(id);
+            var juegos = this.juegoService.findAllByActivo();
             model.addAttribute("juego", juego);
+            model.addAttribute("juegos", juegos);
             return "views/product-detail-view.html";
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
@@ -68,5 +84,66 @@ public class RespawnController {
             return "error";
         }
     }
-    //FORMU
+    //FORMULARIO DE VIDEOJUEGOS
+    @GetMapping("/formulario/juegos/{id}")
+    public String formularioJuegos(Model model, @PathVariable("id")long id){
+        try {
+            model.addAttribute("categorias",this.categoriaService.findAll());
+            model.addAttribute("plataformas",this.plataformaService.findAll());
+            model.addAttribute("idioma", this.idiomaService.findAll());
+            if(id==0){
+                model.addAttribute("juegos",new Juego());
+            }else{
+                model.addAttribute("juegos",this.juegoService.findById(id));
+            }
+            return "views/formulario/juegos";
+        }catch(Exception e){
+            model.addAttribute("error", e.getMessage());
+            return "error";
+        }
+    }
+
+    @PostMapping("/formulario/juegos/{id}")
+    public String guardarJuegos(
+            @Valid @ModelAttribute("juegos") Juego juego,
+            Model model,@PathVariable("id")long id
+    ) {
+        try {
+            model.addAttribute("categorias",this.categoriaService.findAll());
+            model.addAttribute("plataformas",this.plataformaService.findAll());
+            model.addAttribute("idiomas", this.idiomaService.findAll());
+            if(id==0){
+                this.juegoService.save(juego); //saveOne -> save
+            }else{
+                this.juegoService.update(id, juego); //updateOne -> update
+            }
+            return "redirect:/crud";
+        }catch(Exception e){
+            model.addAttribute("error", e.getMessage());
+            return "error";
+        }
+    }
+
+    @GetMapping("/eliminar/juego/{id}")
+    public String eliminarJuegos(Model model, @PathVariable("id")long id){
+        try {
+            model.addAttribute("juegos",this.juegoService.findById(id));
+            return "views/formulario/eliminar";
+        }catch(Exception e){
+            model.addAttribute("error", e.getMessage());
+            return "error";
+        }
+    }
+
+    @PostMapping("/eliminar/juego/{id}")
+    public String desactivarJuego(Model model, @PathVariable("id")long id){
+        try {
+            this.juegoService.deleteById(id);
+            return "redirect:/crud";
+        }catch(Exception e){
+            model.addAttribute("error", e.getMessage());
+            System.out.println(e);
+            return "error";
+        }
+    }
 }

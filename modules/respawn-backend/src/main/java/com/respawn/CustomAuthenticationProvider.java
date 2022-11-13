@@ -30,7 +30,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
             throw new RespawnAuthenticationException("Wrong password!");
         }
         User user = Usuario.of(usuario.get());
-        return new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword(), user.getAuthorities());
+        return new UsernamePasswordAuthenticationToken(user, user.getPassword(), user.getAuthorities());
     }
 
     @Override
