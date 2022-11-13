@@ -20,7 +20,7 @@
             <li class="nav__item">
                 <a class="nav__link" th:href="@{/}">Nosotros</a>
             </li>
-            <li class="nav__item" sec:authorize="hasRole('ROLE_ADMINISTRADOR')">
+            <li class="nav__item" sec:authorize="hasAuthority('ADMINISTRADOR')">
                 <a class="nav__link" th:href="@{/crud}">Gestión de juegos</a>
             </li>
         </ul>
@@ -32,3 +32,4 @@
         </form>
     </div>
 </nav>
+</html>
