@@ -1,1 +1,27 @@
-<div th:fragment="_product-detail">Falta implementar</div>
+<div class="product-image">
+    <img th:src="${juego.imagenPortada}" alt="Foto de portada del juego" class="product__img">
+</div>
+<div class="product__info">
+    <h2 th:text="${juego.nombre}"></h5>
+        <h3 th:text="${juego.categoria}"></h3>
+        <p th:text="${juego.precioSinDescuento}"></p>
+        <p th:text="${juego.tamaño}"></p>
+        <p th:text="${juego.precioSinDescuento}"></p>
+        <p th:text="${juego.precioSinDescuento}"></p>
+        <!--Lista de idiomas-->
+        <p>
+            Juego Original y completo <br>
+            Descargá desde tu consola <br>
+            Incluye guía paso a paso <br>
+            Entrega inmediata <br>
+        </p>
+        <div class="product__sell">
+            <button>
+                <img src="https://cdn-icons-png.flaticon.com/512/1413/1413908.png"></img>
+            </button>
+            <button>COMPRAR AHORA</button>
+        </div>
+</div>
+<div>
+</div>
+</div>
