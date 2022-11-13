@@ -42,7 +42,7 @@ public class Juego extends GenericModel {
     @PastOrPresent(message="La fecha debe ser igual o menor a la fecha actual")
     private Date fechaLanzamiento;
 
-    private String tamaño;
+    private String tamanio;
 
     private boolean Oferta;
     private boolean activo = true;
