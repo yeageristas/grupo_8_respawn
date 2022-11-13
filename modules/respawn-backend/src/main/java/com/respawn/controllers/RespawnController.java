@@ -57,5 +57,16 @@ public class RespawnController {
             return "error";
         }
     }
-
+    @GetMapping("/crud")
+    public String crudVideojuego(Model model){
+        try {
+            List<Juego> juegos = this.juegoService.findAll(); //activos y no activos
+            model.addAttribute("juegos",juegos);
+            return "views/crud-juego";
+        }catch(Exception e){
+            model.addAttribute("error", e.getMessage());
+            return "error";
+        }
+    }
+    //FORMU
 }
