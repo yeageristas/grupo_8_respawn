@@ -1,1 +1,39 @@
-<div th:fragment="_product-detail">Falta implementar</div>
+<div th:fragment="_product-detail">
+    <section style="background-color: #D9D9D9; height: 100%; max-height: 634px; display: flex; justify-content: center; align-items: flex-start; padding: 57px;">
+        <img th:src="${juego.imagenPortada}" alt="Foto de portada del juego" class="product__img" style="width: 100%; max-width: 432px; height: auto; margin-right: 100px;">
+        <div id="containerText" style="max-width: 500px; width: 100%;">
+          <div id="containerTitle" style="display: flex; justify-content: space-between;">
+            <h2 th:text="${juego.nombre}"></h5>
+          </div>
+          <p id="subtitle" style="font-style: normal;
+          font-weight: 500;
+          font-size: 24px;
+          line-height: 40px;
+          margin-top: 0;
+          margin-bottom: 10px;">EDICIÓN DIGITAL</p>
+          <p th:text="${juego.precioSinDescuento}" style="font-style: normal;
+          font-weight: 500;
+          font-size: 24px;
+          line-height: 40px;
+          margin-top: 0;
+          margin-bottom: 10px;"></p>
+         <p th:text="${juego.descripcion}" style="font-style: normal;
+         font-weight: 500;
+         font-size: 16px;
+         line-height: 30px;
+         margin: 0;"></p>
+         <p th:text="${juego.tamaño}"></p>
+         <p>
+            Juego Original y completo <br>
+            Descargá desde tu consola <br>
+            Incluye guía paso a paso <br>
+            Entrega inmediata <br>
+        </p>
+          <input id="containerButtons" type=image src="https://cdn-icons-png.flaticon.com/512/1413/1413908.png" style=" width: 100%;
+          max-width: 206px;
+          height: auto;
+          margin-top: 42px;">
+        </div>
+      </section>
+</div>
+</div>
