@@ -21,7 +21,7 @@ public class RespawnController {
     @GetMapping("/")
     public String home(Model model) {
         try {
-            List<Juego> juegos = this.juegoService.findAll();
+            List<Juego> juegos = this.juegoService.findAllByActivo();
             model.addAttribute("juegos", juegos);
             return "views/home";
         } catch (Exception e) {
@@ -34,17 +34,12 @@ public class RespawnController {
         return "views/login";
     }
 
-    @GetMapping("/detalle/{:id}")
+    @GetMapping("/detalle/{id}")
     public String detail(Model model, @PathVariable("id") Long id) {
         try {
-            var juego = this.juegoService.findById(id);
-            if(juego.isPresent()) {
-                model.addAttribute("juego", juego.get());
-                return "views/product-detail.view.html";
-            } else {
-                return "";
-            }
-    
+            Juego juego = this.juegoService.findByIdAndActivo(id);
+            model.addAttribute("juego", juego);
+            return "views/product-detail-view";
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
             return "error";

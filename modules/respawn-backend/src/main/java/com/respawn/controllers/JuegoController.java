@@ -59,13 +59,13 @@ public class JuegoController extends GenericControllerBaseImpl<Juego, JuegoServi
         }
     }
     //METODO PARA LA BUSQUEDA
-    @GetMapping(value = "/busqueda")
-    public String busquedaVideojuego(Model model, @RequestParam(value ="query",required = false)String q){
+    @GetMapping(value = "/search")
+    public String busquedaVideojuego(Model model, @RequestParam(value ="query", required = false)String q){
         try {
             List<Juego> juegos = this.service.findByTitle(q);
-            model.addAttribute("juego", juegos);
+            model.addAttribute("juegos", juegos);
             model.addAttribute("resultado",q);
-            return "views/busqueda";
+            return "views/search";
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
             return "error";

@@ -1,6 +1,6 @@
 <footer th:fragment="_footer">
     <div class="footer__container">
-        <div class= "footer_upper" style=" padding-top: 10px; padding-bottom: 40px; display:flex; flex-direction: row; justify-content: center; align-items: center">
+        <div class= "footer__upper" style=" padding-top: 10px; padding-bottom: 40px; display:flex; flex-direction: row; justify-content: center; align-items: center">
             <ul>
                 <li style="display:inline; padding: 10px 40px"><a>Trabaja con nosotros</a></li>
                 <li style="display:inline; padding: 10px 40px"><a>¿Cómo comprar?</a></li>
@@ -8,11 +8,11 @@
                 <li style="display:inline; padding: 10px 40px"><a>Términos y condiciones</a></li>
             </ul>
         </div>
-        <div class="footer__bottom" style="display:flex; flex-direction: row; justify-content: space-between">
+        <div class="footer__bottom" style="display:flex; flex-direction: row; justify-content: space-between; padding: 0 25px">
             <p>© 2022 Respawn. Todos los derechos reservados.</p>
-            <div>
-                <a href="https://www.instagram.com/"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Instagram-Icon.png/800px-Instagram-Icon.png" style="width:23px;height:23px;"/></a>
-                <a href="https://es-la.facebook.com/"><img src="https://i.pinimg.com/originals/42/75/49/427549f6f22470ff93ca714479d180c2.png" style="width:23px;height:23px;"/></a>
+            <div class="footer__social">
+                <a href="https://www.instagram.com/"><img th:src="@{/img/instagram_icon.png}" style="width:23px;height:23px;"/></a>
+                <a href="https://es-la.facebook.com/"><img th:src="@{/img/facebook_icon.png}" style="width:23px;height:23px;"/></a>
             </div>
         </div>  
     </div> 

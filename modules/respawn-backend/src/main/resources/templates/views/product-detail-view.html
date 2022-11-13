@@ -2,15 +2,15 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title ${juego}>Respawn - Tienda de videojuegos</title>
+    <title th:text="${juego.nombre}">Respawn - Tienda de videojuegos</title>
     <link rel="shortcut icon" type="image/png" th:href="@{/img/respawn_logo.PNG}"/>
-    <link rel="stylesheet" type="text/css" th:href="@{styles/styles.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{../styles/styles.css}">
 </head>
 <body>
     <nav th:replace="components/navbar :: _navbar"></nav>
         <main>
             <div class="product-detail-container">
-                <div th:replace="componentes/product-detail"></div>
+                <div th:replace="components/product-detail"></div>
             </div>
             <h2>ÚLTIMOS VENDIDOS</h2>
             <div class="card__container">
@@ -18,7 +18,6 @@
                     <div th:replace="components/card :: _card"></div>
                 </div>
             </div>
-            
         </main>
     <footer th:replace="components/footer"></footer>
 </body>

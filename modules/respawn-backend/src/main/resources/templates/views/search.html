@@ -15,8 +15,10 @@
       <div>
         <h2>Resultados de la búsqueda "<span th:text="${resultado}"></span>": </h2>
       </div>
-      <div th:each="juego : ${juegos}">
-        <div th:replace="components/card :: _card"></div>
+      <div class="card__container">
+        <div th:each="juego : ${juegos}">
+          <div th:replace="components/card :: _card"></div>
+        </div>
       </div>
     </div>
     <div th:unless="${juegos.size}">
@@ -25,8 +27,7 @@
       </div>
     </div>
   </div>
-
-  <footer th:replace="components/footer"></footer>
 </main>
+<footer th:replace="components/footer"></footer>
 </body>
 </html>
