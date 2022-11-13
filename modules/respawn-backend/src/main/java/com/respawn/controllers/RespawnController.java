@@ -21,7 +21,7 @@ public class RespawnController {
     @GetMapping("/")
     public String home(Model model) {
         try {
-            List<Juego> juegos = this.juegoService.findAll();
+            List<Juego> juegos = this.juegoService.findAllByActivo();
             model.addAttribute("juegos", juegos);
             return "views/home";
         } catch (Exception e) {
@@ -34,7 +34,7 @@ public class RespawnController {
         return "views/login";
     }
 
-    @GetMapping("/detalle/{:id}")
+    @GetMapping("/detalle/{id}")
     public String detail(Model model, @PathVariable("id") Long id) {
         try {
             var juego = this.juegoService.findById(id);
