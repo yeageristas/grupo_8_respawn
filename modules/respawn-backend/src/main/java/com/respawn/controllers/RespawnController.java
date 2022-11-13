@@ -39,14 +39,14 @@ public class RespawnController {
         try {
             var juego = this.juegoService.findById(id);
             model.addAttribute("juego", juego);
-            return "views/product-detail.view.html";
+            return "views/product-detail-view.html";
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
             return "error";
         }
     }
     @GetMapping(value = "/search")
-    public String busquedaJuego(Model model, @RequestParam(value ="query", required = false)String q) {
+    public String busquedaJuego(Model model, @RequestParam(value ="query", required = false) String q) {
         try {
             List<Juego> juegos = this.juegoService.findByTitle(q);
             model.addAttribute("juegos", juegos);
@@ -57,5 +57,16 @@ public class RespawnController {
             return "error";
         }
     }
-
+    @GetMapping("/crud")
+    public String crudVideojuego(Model model){
+        try {
+            List<Juego> juegos = this.juegoService.findAll(); //activos y no activos
+            model.addAttribute("juegos",juegos);
+            return "views/crud-juego";
+        }catch(Exception e){
+            model.addAttribute("error", e.getMessage());
+            return "error";
+        }
+    }
+    //FORMU
 }

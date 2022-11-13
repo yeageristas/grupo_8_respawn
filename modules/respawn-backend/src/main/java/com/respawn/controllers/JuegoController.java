@@ -70,7 +70,7 @@ public class JuegoController extends GenericControllerBaseImpl<Juego, JuegoServi
         try {
             List<Juego> juegos = this.service.findAll(); //activos y no activos
             model.addAttribute("juegos",juegos);
-            return "views/crud";
+            return "views/crud-juego";
         }catch(Exception e){
             model.addAttribute("error", e.getMessage());
             return "error";

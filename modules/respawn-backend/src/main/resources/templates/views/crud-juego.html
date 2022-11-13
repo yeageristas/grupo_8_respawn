@@ -2,15 +2,15 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-    <title>CRUD</title>
+    <link rel="stylesheet" type="text/css" th:href="@{../styles/styles.css}">
+    <title>Respawn - Gestión de juegos</title>
 </head>
 <body>
-<nav th:replace="components/navbar :: nav_bar"></nav>
+<nav th:replace="components/navbar :: _navbar"></nav>
 <div class="container">
     <div class="row my-5">
         <div class="col-3">
-            <h4>CRUD Juego</h4>
+            <h4>Gestión de juegos</h4>
         </div>
         <div class="col-9 d-flex flex-row-reverse">
             <a th:href="@{/formulario/juegos/0}" class="btn btn-success">Agregar Juego</a>
@@ -48,5 +48,6 @@
         </div>
     </div>
 </div>
+<footer th:replace="components/footer"></footer>
 </body>
 </html>
