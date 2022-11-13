@@ -23,8 +23,9 @@ public abstract class GenericService<E extends GenericModel> implements GenericT
     }
 
     @Transactional
-    public Optional<E> findById(Long id) throws Exception {
-        return this.baseRepository.findById(id);
+    public E findById(Long id) throws Exception {
+        Optional<E> opt =baseRepository.findById(id);
+        return opt.get();
     }
 
     @Transactional

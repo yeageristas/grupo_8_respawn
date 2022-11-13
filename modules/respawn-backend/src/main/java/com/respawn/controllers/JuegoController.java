@@ -38,7 +38,7 @@ public class JuegoController extends GenericControllerBaseImpl<Juego, JuegoServi
     public String inicio(Model model) {
         try {
             List<Juego> juegos = this.service.findAllByActivo();
-            model.addAttribute("juego", juegos);
+            model.addAttribute("juegos", juegos);
 
             return "views/inicio";
         } catch (Exception e) {
@@ -51,7 +51,7 @@ public class JuegoController extends GenericControllerBaseImpl<Juego, JuegoServi
     public String detalleVideojuego(Model model, @PathVariable("id") long id) {
         try {
             Juego juegos = this.service.findByIdAndActivo(id);
-            model.addAttribute("juego",juegos);
+            model.addAttribute("juegos",juegos);
             return "views/detalle";
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
@@ -63,7 +63,7 @@ public class JuegoController extends GenericControllerBaseImpl<Juego, JuegoServi
     public String busquedaVideojuego(Model model, @RequestParam(value ="query",required = false)String q){
         try {
             List<Juego> juegos = this.service.findByTitle(q);
-            model.addAttribute("juego", juegos);
+            model.addAttribute("juegos", juegos);
             model.addAttribute("resultado",q);
             return "views/busqueda";
         } catch (Exception e) {
@@ -76,7 +76,7 @@ public class JuegoController extends GenericControllerBaseImpl<Juego, JuegoServi
     public String crudVideojuego(Model model){
         try {
             List<Juego> juegos = this.service.findAll(); //activos y no activos
-            model.addAttribute("juego",juegos);
+            model.addAttribute("juegos",juegos);
             return "views/crud";
         }catch(Exception e){
             model.addAttribute("error", e.getMessage());
@@ -91,9 +91,9 @@ public class JuegoController extends GenericControllerBaseImpl<Juego, JuegoServi
             model.addAttribute("plataformas",this.svcPlataforma.findAll());
             model.addAttribute("idioma", this.svcIdioma.findAll());
             if(id==0){
-                model.addAttribute("juego",new Juego());
+                model.addAttribute("juegos",new Juego());
             }else{
-                model.addAttribute("juego",this.service.findById(id));
+                model.addAttribute("juegos",this.service.findById(id));
             }
             return "views/formulario/juegos";
         }catch(Exception e){
@@ -104,7 +104,7 @@ public class JuegoController extends GenericControllerBaseImpl<Juego, JuegoServi
 
     @PostMapping("/formulario/juegos/{id}")
     public String guardarJuegos(
-            @Valid @ModelAttribute("videojuego") Juego juego,
+            @Valid @ModelAttribute("juegos") Juego juego,
             Model model,@PathVariable("id")long id
     ) {
         try {
@@ -126,7 +126,7 @@ public class JuegoController extends GenericControllerBaseImpl<Juego, JuegoServi
     @GetMapping("/eliminar/juego/{id}")
     public String eliminarJuegos(Model model, @PathVariable("id")long id){
         try {
-            model.addAttribute("juego",this.service.findById(id));
+            model.addAttribute("juegos",this.service.findById(id));
             return "views/formulario/eliminar";
         }catch(Exception e){
             model.addAttribute("error", e.getMessage());

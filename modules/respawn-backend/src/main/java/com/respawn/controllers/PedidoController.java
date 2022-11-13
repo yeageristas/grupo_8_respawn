@@ -53,11 +53,9 @@ public class PedidoController {
 	public ResponseEntity<?> find(@PathVariable("id") Long id) {
 		try {
 			var pedidoOpt = this.service.findById(id);
-			if (pedidoOpt.isPresent()) {
-				return ResponseEntity.status(HttpStatus.OK).body(pedidoOpt.get());
-			} else {
-				throw new Exception(String.format("Pedido with id %d not found", id));
-			}
+
+				return ResponseEntity.status(HttpStatus.OK).body(pedidoOpt);
+
 		} catch (Exception ex) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND)
 					.body(String.format("{\"error\":\"%s\"}", ex.getMessage()));

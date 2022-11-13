@@ -38,12 +38,10 @@ public class RespawnController {
     public String detail(Model model, @PathVariable("id") Long id) {
         try {
             var juego = this.juegoService.findById(id);
-            if(juego.isPresent()) {
-                model.addAttribute("juego", juego.get());
+
+                model.addAttribute("juego", juego);
                 return "views/product-detail.view.html";
-            } else {
-                return "";
-            }
+
     
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());

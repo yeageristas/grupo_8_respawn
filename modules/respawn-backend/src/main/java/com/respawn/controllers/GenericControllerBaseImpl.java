@@ -35,11 +35,9 @@ public abstract class GenericControllerBaseImpl<E extends GenericModel, S extend
     public ResponseEntity<?> find(@PathVariable("id") Long id) {
         try {
             var entityOpt = this.service.findById(id);
-            if(entityOpt.isPresent()) {
-                return ResponseEntity.status(HttpStatus.OK).body(entityOpt.get());
-            } else {
-                throw new Exception(String.format("Entity with id %d not found", id));
-            }
+
+                return ResponseEntity.status(HttpStatus.OK).body(entityOpt);
+
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(String.format("{\"error\":\"%s\"}", ex.getMessage()));
         }
