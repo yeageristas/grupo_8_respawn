@@ -1,13 +1,11 @@
 package com.respawn.services;
 
-import com.respawn.dto.CreateUsuarioRequest;
 import com.respawn.entities.Pais;
 import com.respawn.entities.Rol;
 import com.respawn.entities.Usuario;
 import com.respawn.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,7 +15,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.*;
 
-public class SecurityUserDetailsService implements UserDetailsService {
+public class RespawnUserDetailsService implements UserDetailsService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 

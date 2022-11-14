@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.envers.Audited;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 
 @Entity
@@ -11,7 +12,6 @@ import javax.persistence.Entity;
 @Setter
 @Audited
 public class Idioma extends GenericModel {
-
+    @Column(unique = true)
     private String nombre;
-
 }

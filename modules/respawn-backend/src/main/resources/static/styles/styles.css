@@ -63,9 +63,10 @@ footer {
 }
 
 .nav__sections,
-.search__form {
+.nav__form {
     display: flex;
     align-items: center;
+    justify-content: right;
 }
 
 .nav__item {
@@ -113,15 +114,25 @@ input[type="search"]{
     cursor: pointer;
     margin: 0 10px;
     padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .nav__btn:hover {
     background: #ccc;
 }
 
-#search_icon {
+#search_icon,
+#cart_icon,
+#user_icon {
     width: 23px;
     height: 23px;
+}
+
+#user_icon {
+    margin-left: 4px;
+    margin-top: 4px;
 }
 
 main {

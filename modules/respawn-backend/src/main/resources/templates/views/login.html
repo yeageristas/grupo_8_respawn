@@ -12,6 +12,7 @@
     <main>
         <div class="login__outer__container">
             <div class="login__container">
+                <span>Iniciar sesion</span>
                 <form th:action="@{/doLogin}" method="post" style="max-width: 400px; margin: 0 auto;">
                     <p>
                         E-mail: <input type="email"  name="email" required />
@@ -20,8 +21,13 @@
                         Password: <input type="password" name="password" required />
                     </p>
                     <p>
+                        <label for="remember"> Remember me</label>
+                        <input type="checkbox" name="remember" id="remember" />
+                    </p>
+                    <p>
                         <input type="submit" value="Login" />
                     </p>
+
                 </form>
             </div>
         </div>

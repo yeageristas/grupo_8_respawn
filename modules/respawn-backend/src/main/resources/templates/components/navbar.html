@@ -24,11 +24,23 @@
                 <a class="nav__link" th:href="@{/crud}">Gestión de juegos</a>
             </li>
         </ul>
-        <form th:action="@{/search}" class="search__form">
+        <form th:action="@{/search}" class="nav__form">
             <input type="search" placeholder="Buscar un juego" aria-label="Search" name="query" class="search__input">
             <button type="submit" class="nav__btn">
                 <img th:src="@{/img/search_icon.png}" alt="Búsqueda" id="search_icon">
             </button>
+            <div style="display: flex">
+                <form th:action="@{/}">
+                    <button type="submit" class="nav__btn">
+                        <img th:src="@{/img/cart_icon.png}" alt="Carrito de compras" id="cart_icon">
+                    </button>
+                </form>
+                <form th:action="@{/login}">
+                    <button type="submit" class="nav__btn">
+                        <img th:src="@{/img/user_icon.png}" alt="Perfil de usuario" id="user_icon">
+                    </button>
+                </form>
+            </div>
         </form>
     </div>
 </nav>
