@@ -90,7 +90,7 @@ public class RespawnController {
         try {
             model.addAttribute("categorias",this.categoriaService.findAll());
             model.addAttribute("plataformas",this.plataformaService.findAll());
-            model.addAttribute("idioma", this.idiomaService.findAll());
+            model.addAttribute("idiomas", this.idiomaService.findAll());
             if(id==0){
                 model.addAttribute("juegos",new Juego());
             }else{
