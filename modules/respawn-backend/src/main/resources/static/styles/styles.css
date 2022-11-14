@@ -194,3 +194,17 @@ h2 {
 login__outer__container {
     background-color: var(--color-3);
 }
+
+.gameTitle {
+    margin: 25px 0px;
+    font-family: Gothic A1;
+    font-size: 48px;
+    font-weight: 500;
+    line-height: 60px;
+    letter-spacing: 0em;
+    text-align: center;
+}
+
+.buttonsContainer {
+
+}
