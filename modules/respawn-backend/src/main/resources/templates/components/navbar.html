@@ -21,7 +21,7 @@
                 <a class="nav__link" th:href="@{/}">Nosotros</a>
             </li>
             <li class="nav__item" sec:authorize="hasAuthority('ADMINISTRADOR')">
-                <a class="nav__link" th:href="@{/crud}">Gestión de juegos</a>
+                <a class="nav__link" th:href="@{/crud}">Gestionar juegos</a>
             </li>
         </ul>
         <form th:action="@{/search}" class="nav__form">
@@ -30,7 +30,7 @@
                 <img th:src="@{/img/search_icon.png}" alt="Búsqueda" id="search_icon">
             </button>
             <div style="display: flex">
-                <form th:action="@{/}">
+                <form th:action="@{/shopping-cart}">
                     <button type="submit" class="nav__btn">
                         <img th:src="@{/img/cart_icon.png}" alt="Carrito de compras" id="cart_icon">
                     </button>

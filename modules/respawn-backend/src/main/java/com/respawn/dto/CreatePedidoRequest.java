@@ -16,8 +16,8 @@ public class CreatePedidoRequest {
     private double montoTotal;
     private int numeroPedido;
     private EstadoPedido estadoPedido;
-    private Usuario usuario;
+    private long usuarioId;
     private int cantidad;
     private double montoSubtotal;
-    private Juego juego;
+    private long juegoId;
 }

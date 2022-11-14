@@ -16,4 +16,8 @@ public class PedidoDetalleService extends GenericService<PedidoDetalle> implemen
     public PedidoDetalleService(GenericRepository<PedidoDetalle> baseRepository) {
         super(baseRepository);
     }
+
+    public void deleteById(long id) {
+        pedidoDetalleRepository.deleteById(id);
+    }
 }

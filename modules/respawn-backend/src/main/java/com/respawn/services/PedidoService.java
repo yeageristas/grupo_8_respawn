@@ -8,6 +8,8 @@ import com.respawn.transactional_services.PedidoTransactionalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class PedidoService extends GenericService<Pedido> implements PedidoTransactionalService {
 
@@ -29,6 +31,10 @@ public class PedidoService extends GenericService<Pedido> implements PedidoTrans
     	p.setId(id);
     	p.addPedidoDetalle(pd);
         this.pedidoRepository.save(p);
+    }
+
+    public Optional<Pedido> findPedidoByUser(Long id) {
+        return pedidoRepository.findPedidoByUser(id);
     }
     
 }

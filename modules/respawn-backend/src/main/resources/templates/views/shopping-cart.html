@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Respawn - Carrito de compras</title>
+    <link rel="shortcut icon" type="image/png" th:href="@{/img/respawn_logo.PNG}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{styles/styles.css}">
+</head>
+<body>
+<nav th:replace="components/navbar :: _navbar"></nav>
+
+<main>
+    <button>< Seguir comprando</button>
+
+    <table>
+        <thead>
+        <tr>
+            <th>BORRAR</th>
+            <th>PRODUCTO</th>
+            <th>CANTIDAD</th>
+            <th>PRECIO</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr th:each="detalle : ${detalles}" th:if="${detalles != null || detalles.size()}">
+                <td> <!--Acciones-->
+                    <a th:href="@{/eliminar-carrito/juego/{id}(id=${detalle.id})}">
+                        <img th:src="@{/img/delete_icon.png}">
+                    </a>
+                </td>
+                <td th:text="${detalle.juego.nombre}">
+                    <img th:src="${detalle.juego.imagenPortada}" alt="Imagen del juego">
+                </td>
+                <td>
+                    <input type="number" name="quantity">
+                </td>
+                <td th:text="${detalle.juego.precioSinDescuento} + ' ARS'"></td>
+            </tr>
+        </tbody>
+    </table>
+    <p th:unless="${detalles != null || detalles.size()}">El carrito se encuentra vacío.</p>
+    <div>
+        <h6>TOTAL DEL CARRITO</h6>
+        <h6 th:text="${total}" th:if="${total}">0</h6>
+    </div>
+
+    <button>Continuar</button>
+</main>
+<footer th:replace="components/footer"></footer>
+</body>
+</html>

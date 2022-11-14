@@ -1,15 +1,19 @@
 package com.respawn.controllers;
 
 import com.respawn.dto.CreatePedidoRequest;
+import com.respawn.entities.EstadoPedido;
 import com.respawn.entities.Pedido;
 import com.respawn.entities.PedidoDetalle;
+import com.respawn.services.JuegoService;
 import com.respawn.services.PedidoService;
 
 import java.util.ArrayList;
 
+import com.respawn.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +31,12 @@ public class PedidoController {
 
 	@Autowired
 	protected PedidoService service;
+
+	@Autowired
+	protected UsuarioService usuarioService;
+
+	@Autowired
+	protected JuegoService juegoService;
 
 	@GetMapping
 	public ResponseEntity<?> findAll() {
@@ -66,15 +76,15 @@ public class PedidoController {
 	public ResponseEntity<?> save(@RequestBody CreatePedidoRequest p) {
 		try {
 			Pedido pedido = new Pedido();
-			pedido.setEstadoPedido(p.getEstadoPedido());
+			pedido.setEstadoPedido(new EstadoPedido(p.getEstadoPedido().getNombre()));
 			pedido.setFecha(p.getFecha());
 			pedido.setMontoTotal(p.getMontoTotal());
 			pedido.setNumeroPedido(p.getNumeroPedido());
-			pedido.setUsuario(p.getUsuario());
+			pedido.setUsuario(usuarioService.findById(p.getUsuarioId()));
 
 			PedidoDetalle pedidoDetalle = new PedidoDetalle();
 			pedidoDetalle.setCantidad(p.getCantidad());
-			pedidoDetalle.setJuego(p.getJuego());
+			pedidoDetalle.setJuego(juegoService.findById(p.getJuegoId()));
 			pedidoDetalle.setMontoSubtotal(p.getMontoSubtotal());
 
 			pedido.setListaPedidoDetalle(new ArrayList<PedidoDetalle>());
@@ -96,11 +106,11 @@ public class PedidoController {
 			pedido.setFecha(p.getFecha());
 			pedido.setMontoTotal(p.getMontoTotal());
 			pedido.setNumeroPedido(p.getNumeroPedido());
-			pedido.setUsuario(p.getUsuario());
+			pedido.setUsuario(usuarioService.findById(p.getUsuarioId()));
 
 			PedidoDetalle pedidoDetalle = new PedidoDetalle();
 			pedidoDetalle.setCantidad(p.getCantidad());
-			pedidoDetalle.setJuego(p.getJuego());
+			pedidoDetalle.setJuego(juegoService.findById(p.getJuegoId()));
 			pedidoDetalle.setMontoSubtotal(p.getMontoSubtotal());
 
 			pedido.addPedidoDetalle(pedidoDetalle);

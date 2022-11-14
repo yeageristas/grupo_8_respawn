@@ -1,6 +1,9 @@
 package com.respawn.controllers;
 
 import com.respawn.entities.Juego;
+import com.respawn.entities.Pedido;
+import com.respawn.entities.PedidoDetalle;
+import com.respawn.entities.Usuario;
 import com.respawn.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
@@ -9,13 +12,23 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class RespawnController {
 
     @Autowired
     private JuegoService juegoService;
+
+    @Autowired
+    private PedidoService pedidoService;
+    @Autowired
+    private PedidoDetalleService pedidoDetalleService;
+
+    @Autowired
+    private UsuarioService usuarioService;
     @Autowired
     private AuthenticationService authenticationService;
     @Autowired
@@ -34,6 +47,29 @@ public class RespawnController {
             model.addAttribute("juegos", juegos);
             model.addAttribute("role", role);
             return "views/home";
+        } catch (Exception e) {
+            model.addAttribute("error", e.getMessage());
+            return "error";
+        }
+    }
+
+    @GetMapping("/shopping-cart")
+    public String shoppingCart(Model model) {
+        try {
+            final String userEmail = authenticationService.getUserEmail();
+            var usuario = usuarioService.findByEmail(userEmail);
+            var pedido = this.pedidoService.findPedidoByUser(usuario.get().getId());
+
+            if (pedido.isPresent()) {
+                model.addAttribute("detalles", pedido.get().getListaPedidoDetalle());
+                var total = pedido.get().calcularMontoTotal();
+                model.addAttribute("total", total);
+            } else {
+                model.addAttribute("detalles", Collections.emptyList());
+                model.addAttribute("total", 0);
+            }
+
+            return "views/shopping-cart";
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
             return "error";
@@ -140,6 +176,18 @@ public class RespawnController {
         try {
             this.juegoService.deleteById(id);
             return "redirect:/crud";
+        }catch(Exception e){
+            model.addAttribute("error", e.getMessage());
+            System.out.println(e);
+            return "error";
+        }
+    }
+
+    @PostMapping("/eliminar-carrito/juego/{id}")
+    public String eliminarJuegoCarrito(Model model, @PathVariable("id")long id){
+        try {
+            this.pedidoDetalleService.deleteById(id);
+            return "redirect:/shopping-cart";
         }catch(Exception e){
             model.addAttribute("error", e.getMessage());
             System.out.println(e);

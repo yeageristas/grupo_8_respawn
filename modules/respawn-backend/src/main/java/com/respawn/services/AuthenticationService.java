@@ -2,6 +2,7 @@ package com.respawn.services;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -21,5 +22,13 @@ public class AuthenticationService {
             return auth.getAuthorities().stream().map(Object::toString).collect(Collectors.toUnmodifiableList());
         }
         return Collections.emptyList();
+    }
+
+    public String getUserEmail() {
+        final Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null && !"anonymousUser".equals(auth.getName())) {
+            return auth.getName();
+        }
+        return null;
     }
 }
