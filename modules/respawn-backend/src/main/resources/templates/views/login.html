@@ -2,36 +2,54 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Login - Respawn - Tienda de videojuegos</title>
+    <title>Respawn - Iniciar sesión</title>
     <link rel="shortcut icon" type="image/png" th:href="@{/img/respawn_logo.PNG}"/>
     <link rel="stylesheet" type="text/css" th:href="@{styles/styles.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{styles/login-style.css}">
 </head>
 <body>
     <nav th:replace="components/navbar :: _navbar"></nav>
 
     <main>
-        <div class="login__outer__container">
-            <div class="login__container">
-                <span>Iniciar sesion</span>
-                <form th:action="@{/doLogin}" method="post" style="max-width: 400px; margin: 0 auto;">
-                    <p>
-                        E-mail: <input type="email"  name="email" required />
-                    </p>
-                    <p>
-                        Password: <input type="password" name="password" required />
-                    </p>
-                    <p>
-                        <label for="remember"> Remember me</label>
-                        <input type="checkbox" name="remember" id="remember" />
-                    </p>
-                    <p>
-                        <input type="submit" value="Login" />
-                    </p>
-
-                </form>
+        <div class="form">
+            <div class="form-panel">
+                <div class="form-header">
+                    <h1>Iniciar sesión</h1>
+                </div>
+                <div class="form-content">
+                    <form th:action="@{/doLogin}" method="post">
+                        <div class="form-group">
+                            <label for="email">E-mail:</label>
+                            <input id="email" type="email" name="email" placeholder="E-mail" required/>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Contraseña:</label>
+                            <input id="password" type="password" name="password" placeholder="***********" required/>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-remember" for="remember">
+                                <input type="checkbox" name="remember" id="remember"/>
+                                Recuérdame
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" id="login-button">Ingresar</button>
+                        </div>
+                        <div>
+                            <a href="#" class="form-ref">
+                                ¿Has olvidado la contraseña?
+                            </a>
+                        </div>
+                        <br>
+                        <div>
+                            <a class="form-ref" href="">Registrarme ahora</a>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </main>
+
     <footer th:replace="components/footer"></footer>
 </body>
 </html>
