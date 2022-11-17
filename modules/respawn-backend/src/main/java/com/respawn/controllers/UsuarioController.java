@@ -1,10 +1,11 @@
 package com.respawn.controllers;
 
+import com.respawn.dto.CreateUsuarioRequest;
 import com.respawn.entities.Usuario;
 import com.respawn.services.UsuarioService;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -15,4 +16,9 @@ public class UsuarioController extends GenericControllerBaseImpl<Usuario, Usuari
         super(service);
     }
 
+    @PostMapping("/crear")
+    public ResponseEntity<?> crearUsuario(@RequestBody CreateUsuarioRequest createUsuarioRequest) throws Exception {
+        this.service.save(Usuario.of(createUsuarioRequest));
+        return ResponseEntity.status(HttpStatus.OK).body(null);
+    }
 }
