@@ -84,6 +84,16 @@ public class RespawnController {
         return "views/login";
     }
 
+    @GetMapping("/register")
+    public String register(Model model) {
+        try {
+            return "views/register";
+        } catch (Exception e) {
+            model.addAttribute("error", e.getMessage());
+            return "error";
+        }
+    }
+
     @GetMapping("/detalle/{id}")
     public String detail(Model model, @PathVariable("id") Long id) {
         try {

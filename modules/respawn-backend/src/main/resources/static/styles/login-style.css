@@ -76,7 +76,8 @@ html {
     cursor: pointer;
   }
 
-  #login-button:hover {
+  #login-button:hover,
+  #register-button:hover {
     background: #c73520;
   }
 
