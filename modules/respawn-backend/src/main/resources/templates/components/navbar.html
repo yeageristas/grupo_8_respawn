@@ -23,6 +23,8 @@
             <li class="nav__item" sec:authorize="hasAuthority('ADMINISTRADOR')">
                 <a class="nav__link" th:href="@{/crud}">Gestionar juegos</a>
             </li>
+        </ul>
+        <ul class="nav__sections" style="justify-content: right">
             <li>
                 <form th:action="@{/search}" class="nav__form">
                     <input type="search" placeholder="Buscar un juego" aria-label="Search" name="query" class="search__input">
