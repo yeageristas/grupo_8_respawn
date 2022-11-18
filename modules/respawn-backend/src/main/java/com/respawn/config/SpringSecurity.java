@@ -15,45 +15,48 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class SpringSecurity {
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-            .authorizeRequests()
-            .antMatchers("/", "/img/**", "/styles/**", "/api/v1/**", "/search", "/detalle/**", "/register").permitAll()
-            .anyRequest().authenticated()
-            .and()
-            .formLogin()
-            .usernameParameter("email")
-            .passwordParameter("password")
-            .loginProcessingUrl("/doLogin")
-            .loginPage("/login")
-            .defaultSuccessUrl("/", true)
-            .permitAll()
-            .and()
-            .rememberMe().key("rem-me-key")
-            .tokenValiditySeconds(86400)
-            .and()
-            .logout()
-            .deleteCookies("JSESSIONID")
-            .permitAll()
-            .and().csrf().disable();
-        return http.build();
-    }
+        @Bean
+        public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+            http
+                .authorizeRequests()
+                .antMatchers(
+                        "/",
+                        "/img/**",
+                        "/styles/**",
+                        "/api/v1/**",
+                        "/search",
+                        "/detalle/**",
+                        "/register",
+                        "/doRegister")
+                    .permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .formLogin()
+                .usernameParameter("email")
+                .passwordParameter("password")
+                .loginProcessingUrl("/doLogin")
+                .loginPage("/login")
+                .defaultSuccessUrl("/")
+                .permitAll()
+                .and()
+                .rememberMe().key("rem-me-key")
+                .rememberMeParameter("remember")
+                .rememberMeCookieDomain("rememberlogin")
+                .and()
+                .logout()
+                .permitAll()
+                .and().csrf().disable();
 
-    @Bean
-    public AuthenticationProvider authenticationProvider() {
-        return new CustomAuthenticationProvider();
-    }
-    
-    @Bean
-    public UserDetailsService userDetailsService() {
-        return new RespawnUserDetailsService();
-    }
-    
-    @Bean
-    public PasswordEncoder getPasswordEncoder() {
-        return NoOpPasswordEncoder.getInstance();
-    }
+            return http.build();
+        }
+        @Bean
+        public AuthenticationProvider authenticationProvider() {
+            return new CustomAuthenticationProvider();
+        }
+        @Bean
+        public UserDetailsService userDetailsService() {
+            return new RespawnUserDetailsService();
+        }
 }
 
 

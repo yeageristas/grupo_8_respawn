@@ -1,9 +1,8 @@
 package com.respawn.controllers;
 
-import com.respawn.entities.Juego;
-import com.respawn.entities.Pedido;
-import com.respawn.entities.PedidoDetalle;
-import com.respawn.entities.Usuario;
+import com.respawn.dto.CreateUsuarioRequest;
+import com.respawn.entities.*;
+import com.respawn.repositories.PaisRepository;
 import com.respawn.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
@@ -37,6 +36,9 @@ public class RespawnController {
     private PlataformaService plataformaService;
     @Autowired
     private IdiomaService idiomaService;
+
+    @Autowired
+    private PaisService paisService;
 
     @GetMapping("/")
     public String home(Model model) {
@@ -91,8 +93,26 @@ public class RespawnController {
     @GetMapping("/register")
     public String register(Model model) {
         try {
+            model.addAttribute("paises", paisService.findAll());
+            model.addAttribute("usuario", new CreateUsuarioRequest());
             return "views/register";
         } catch (Exception e) {
+            model.addAttribute("error", e.getMessage());
+            return "error";
+        }
+    }
+
+    @PostMapping ("/doRegister")
+    public String registerHandler(Model model, @ModelAttribute("usuario") CreateUsuarioRequest usuario) {
+        try {
+            var pais = this.paisService.findByNombre(usuario.getPais());
+            var rol = Rol.valueOf(usuario.getRol());
+            var usuarioNuevo = Usuario.of(usuario);
+            usuarioNuevo.setPais(pais);
+            usuarioNuevo.setRol(rol);
+            this.usuarioService.save(usuarioNuevo);
+            return "redirect:/";
+        } catch(Exception e) {
             model.addAttribute("error", e.getMessage());
             return "error";
         }

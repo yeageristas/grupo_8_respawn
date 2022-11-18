@@ -94,7 +94,7 @@ html {
     margin: 0 10px 0 0;
   }
   .form-panel {
-    padding: 60px calc(5% + 60px) 60px 60px;
+    padding: 60px;
     box-sizing: border-box;
   } 
   .form-header {
