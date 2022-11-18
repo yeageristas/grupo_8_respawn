@@ -6,47 +6,102 @@
     <title>Respawn - Carrito de compras</title>
     <link rel="shortcut icon" type="image/png" th:href="@{/img/respawn_logo.PNG}"/>
     <link rel="stylesheet" type="text/css" th:href="@{styles/styles.css}">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+
 </head>
 <body>
+
 <nav th:replace="components/navbar :: _navbar"></nav>
 
 <main>
-    <button>< Seguir comprando</button>
+    <section >
+        <div aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a th:href="@{/}">Inicio</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Carrito de Compras</li>
+            </ol>
+        </div>
+    </section>
 
-    <table>
-        <thead>
-        <tr>
-            <th>BORRAR</th>
-            <th>PRODUCTO</th>
-            <th>CANTIDAD</th>
-            <th>PRECIO</th>
-        </tr>
-        </thead>
-        <tbody>
-            <tr th:each="detalle : ${detalles}" th:if="${detalles != null || detalles.size()}">
-                <td> <!--Acciones-->
-                    <a th:href="@{/eliminar-carrito/juego/{id}(id=${detalle.id})}">
-                        <img th:src="@{/img/delete_icon.png}">
-                    </a>
-                </td>
-                <td th:text="${detalle.juego.nombre}">
-                    <img th:src="${detalle.juego.imagenPortada}" alt="Imagen del juego">
-                </td>
-                <td>
-                    <input type="number" name="quantity">
-                </td>
-                <td th:text="${detalle.juego.precioSinDescuento} + ' ARS'"></td>
-            </tr>
-        </tbody>
-    </table>
-    <p th:unless="${detalles != null || detalles.size()}">El carrito se encuentra vacío.</p>
-    <div>
-        <h6>TOTAL DEL CARRITO</h6>
-        <h6 th:text="${total}" th:if="${total}">0</h6>
+        <div class="progress-steps">
+
+        <span class="step active">
+        <span class="number">1</span>
+        <span class="text">CARRITO</span>
+
+        <span class="spacer"></span>
+        </span>
+
+        <span class="step ">
+        <span class="number">2</span>
+        <span class="text">DETALLES DEL PAGO</span>
+
+        <span class="spacer"></span>
+        </span>
+
+        <span class="step">
+        <span class="number">3</span>
+        <span class="text last">PEDIDO COMPLETADO</span>
+        </span>
+
+        </div>
+
+    <div >
+        <a class="buttons" th:href="@{/}"  style="text-decoration: none;"> Seguir comprando </a>
     </div>
+    <section>
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-12">
+                    <table class="table" style="margin: 0 auto;" >
+                        <thead>
+                            <tr>
+                                <th scope="col">BORRAR</th>
+                                <th scope="col">PRODUCTO</th>
+                                <th scope="col">CANTIDAD</th>
+                                <th scope="col">PRECIO</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="detalle : ${detalles}" th:if="${detalles != null || detalles.size()}">
+                                    <td> <!--Acciones-->
+                                        <a th:href="@{/eliminar-carrito/juego/{id}(id=${detalle.id})}">
+                                            <img th:src="@{/img/delete_icon.png}">
+                                        </a>
+                                    </td>
+                                    <!--Detalle pedido-->
+                                    <td th:text="${detalle.juego.nombre}">
+                                        <img th:src="${detalle.juego.imagenPortada}" alt="Imagen del juego">
+                                    </td>
+                                    <!--Cantidad-->
+                                    <td>
+                                        <input type="number" name="quantity">
+                                    </td>
+                                    <!--Precio-->
+                                    <td th:text="${detalle.juego.precioSinDescuento} + ' ARS'"></td>
+                                </tr>
+                            </tbody>
+                    </table>
+                </div>
+                <p th:unless="${detalles != null || detalles.size()}">El carrito se encuentra vacío.</p>
+                </div>
+            </div>
+        </div>
+    <div class="col-lg-12">
+        <div>
+            <h6 align = left>TOTAL DEL CARRITO</h6>
+            <h6 align = right th:text="${total}" th:if="${total}">0 </h6>
+        </div>
+        <div>
+            <a th:href="@{/}" class="buttons"> Continuar </a>
+        </div>
 
-    <button>Continuar</button>
+    </div>
+    </section>
 </main>
 <footer th:replace="components/footer"></footer>
+
 </body>
 </html>
