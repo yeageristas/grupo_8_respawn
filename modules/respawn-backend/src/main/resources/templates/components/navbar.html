@@ -20,7 +20,7 @@
                 <a class="nav__link" th:href="@{/}">Nosotros</a>
             </li>
             <li class="nav__item" sec:authorize="hasAuthority('ADMINISTRADOR')">
-                <a class="nav__link" th:href="@{/crud-juego}">Gestionar juegos</a>
+                <a class="nav__link" th:href="@{/crud}">Gestionar juegos</a>
             </li>
         </ul>
         <ul class="nav__sections" style="justify-content: right">
