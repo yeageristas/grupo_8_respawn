@@ -1,7 +1,6 @@
-<script>
-    const handleUser = (isUser) => {
-
-    }
-
-    document
+<script th:inline="javascript" th:fragment="_utility_js" xmlns:th="http://www.thymeleaf.org">
+    document.getElementById('login__logout').addEventListener("click", (e) => {
+        e.preventDefault();
+        window.localtion.href = window.location.href + "../../../logout";
+    });
 </script>
