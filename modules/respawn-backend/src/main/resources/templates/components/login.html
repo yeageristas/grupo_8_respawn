@@ -1,3 +1,12 @@
-<div th:fragment="_login">
-    <img th:src="@{/img/user_icon.png}" alt="Perfil de usuario" id="user_icon" onclick="() => { handleUser(${something}) }">
+<div th:fragment="_login" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <div class="login__auth" sec:authorize="isAuthenticated()">
+        <button class="nav__btn" id="login__logout">
+            <img th:src="@{/img/user_icon.png}" alt="Perfil de usuario" id="user_icon">
+        </button>
+    </div>
+    <form sec:authorize="isAnonymous()" th:action="@{/login}">
+        <button type="submit" class="nav__btn">
+            <img th:src="@{/img/user_icon.png}" alt="Perfil de usuario" id="user_icon">
+        </button>
+    </form>
 </div>

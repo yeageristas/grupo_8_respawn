@@ -42,10 +42,14 @@ public class RespawnController {
     public String home(Model model) {
         try {
             List<Juego> juegos = this.juegoService.findAllByActivo();
-            final String role = authenticationService.getRolesForUser().get(0);
-            System.out.println(role);
+            String role;
+            if(authenticationService.isLoggedIn()) {
+                role = authenticationService.getRolesForUser().get(0);
+                model.addAttribute("role", role);
+            } else {
+                role = "";
+            }
             model.addAttribute("juegos", juegos);
-            model.addAttribute("role", role);
             return "views/home";
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
