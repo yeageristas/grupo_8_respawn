@@ -19,7 +19,16 @@ public class SpringSecurity {
         public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
             http
                 .authorizeRequests()
-                .antMatchers("/", "/img/**", "/styles/**", "/api/v1/**", "/search", "/detalle/**", "/register").permitAll()
+                .antMatchers(
+                        "/",
+                        "/img/**",
+                        "/styles/**",
+                        "/api/v1/**",
+                        "/search",
+                        "/detalle/**",
+                        "/register",
+                        "/doRegister")
+                    .permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

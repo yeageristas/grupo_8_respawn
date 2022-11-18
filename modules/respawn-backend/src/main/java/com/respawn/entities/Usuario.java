@@ -33,8 +33,6 @@ public class Usuario extends GenericModel {
                 .password(createUsuarioRequest.getPassword())
                 .nombreApellido(createUsuarioRequest.getNombreApellido())
                 .fechaNacimiento(createUsuarioRequest.getFechaNacimiento())
-                .pais(createUsuarioRequest.getPais())
-                .rol(createUsuarioRequest.getRol())
                 .build();
     }
 
