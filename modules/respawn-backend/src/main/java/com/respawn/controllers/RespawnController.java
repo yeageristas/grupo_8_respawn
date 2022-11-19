@@ -205,7 +205,7 @@ public class RespawnController {
     @GetMapping("/eliminar/juego/{id}")
     public String eliminarJuegos(Model model, @PathVariable("id")long id){
         try {
-            model.addAttribute("juegos",this.juegoService.findById(id));
+            model.addAttribute("idJuego", id);
             return "views/formulario/eliminar";
         }catch(Exception e){
             model.addAttribute("error", e.getMessage());

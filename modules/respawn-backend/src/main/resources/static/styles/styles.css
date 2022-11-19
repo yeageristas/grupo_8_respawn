@@ -285,3 +285,9 @@ login__outer__container {
     color: #6d6d6d;
 }
 
+.delete-container {
+    position: relative;
+    top: 50%;
+    transform: translateY(50%);
+}
+
