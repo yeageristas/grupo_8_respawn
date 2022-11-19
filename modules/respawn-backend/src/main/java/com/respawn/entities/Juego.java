@@ -44,7 +44,7 @@ public class Juego extends GenericModel {
 
     private String tamanio;
 
-    private boolean Oferta;
+    private boolean oferta;
     private boolean activo = true;
 
     //RELACIONES
