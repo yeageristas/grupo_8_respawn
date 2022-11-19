@@ -1,6 +1,11 @@
-<script th:inline="javascript" th:fragment="_utility_js" xmlns:th="http://www.thymeleaf.org">
-    document.getElementById('login__logout').addEventListener("click", (e) => {
-        e.preventDefault();
-        window.localtion.href = window.location.href + "../../../logout";
+<script defer th:inline="javascript" th:fragment="_utility_js" xmlns:th="http://www.thymeleaf.org">
+    document.addEventListener("DOMContentLoaded", function(event) {
+        document.getElementById('login__logout').addEventListener("click", (e) => {
+            e.preventDefault();
+            console.log("logout");
+            window.location.href = window.location.protocol + "//" + window.location.host + "/logout";
+        });
+
+        console.log("loaded");
     });
 </script>
