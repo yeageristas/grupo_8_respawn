@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -178,12 +179,16 @@ public class RespawnController {
     @PostMapping("/formulario/juegos/{id}")
     public String guardarJuegos(
             @Valid @ModelAttribute("juego") Juego juego,
+            BindingResult result,
             Model model,@PathVariable("id")long id
     ) {
         try {
             model.addAttribute("categorias",this.categoriaService.findAll());
             model.addAttribute("plataformas",this.plataformaService.findAll());
             model.addAttribute("idiomas", this.idiomaService.findAll());
+            if(result.hasErrors()){
+                return "views/formulario/juegos";
+            }
             if(id==0){
                 juego.setId(null);
                 this.juegoService.save(juego); //saveOne -> save
