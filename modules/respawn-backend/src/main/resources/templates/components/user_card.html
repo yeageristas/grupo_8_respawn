@@ -1,18 +1,64 @@
-<div th:fragment="_user_card" class="user__card">
-<button class="dropbtn">Dropdown</button>
-    <div id="user_card_dropdown" class="dropdown-content">
-        <a href="#">Link 1</a>
-        <a href="#">Link 2</a>
-        <a href="#">Link 3</a>
+<div th:fragment="_user_card" class="user__card" xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <button class="dropbtn" id="user__card__button">
+        <img th:src="@{/img/user_icon.png}" alt="Perfil de usuario" id="user_icon">
+    </button>
+    <div id="user__card__dropdown" class="dropdown-content" sec:authorize="isAuthenticated()">
+        <div class="user__card__info">Bienvenido, <span th:text="${#authentication.principal.firstName}"></span></span></div>
+        <button class="user__card__btn" id="login__logout">
+            Cerrar sesion
+        </button>
+    </div>
+    <div id="user__card__dropdown" class="dropdown-content" sec:authorize="isAnonymous()">
+        <button class="user__card__btn" id="login__login">
+            Iniciar sesion
+        </button>
+        <button class="user__card__btn" id="login__register">
+            Registrarse
+        </button>
     </div>
 </div>
 
-<script defer>
-    const handleUserCardClick = () => {
+<script defer th:inline="javascript">
 
-    }
+    document.getElementById('login__logout').addEventListener("click", (e) => {
+        e.preventDefault();
+        console.log("logout");
+        window.location.href = window.location.protocol + "//" + window.location.host + "/logout";
+    });
 
-    document.addEventListener("click", () => {
-        
+    document.getElementById('login__login').addEventListener("click", (e) => {
+        e.preventDefault();
+        console.log("login");
+        window.location.href = window.location.protocol + "//" + window.location.host + "/login";
+    });
+
+    document.getElementById('login__register').addEventListener("click", (e) => {
+        e.preventDefault();
+        console.log("register");
+        window.location.href = window.location.protocol + "//" + window.location.host + "/register";
+    });
+
+
+    document.getElementById('user__card__dropdown').addEventListener("click", (e) => {
+        e.preventDefault();
+        handleUserCardClick();
+    });
+
+    document.getElementById('user__card__button').addEventListener("click", (e) => {
+        e.preventDefault();
+        document.getElementById('user__card__button').classList.toggle("show");
     })
+
+    document.onclick = (e) => {
+        if(!e.target.matches('.dropbtn')) {
+            let dropdowns = document.getElementsByClassName('dropdown-content');
+            for(let i = 0; i < dropdowns.length; ++i) {
+                const openDropdown = dropdowns[i];
+                if(openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
+            }
+        }
+    }
 </script>
