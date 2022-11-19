@@ -4,7 +4,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
         <img th:src="@{/img/user_icon.png}" alt="Perfil de usuario" id="user_icon">
     </button>
     <div id="user__card__dropdown" class="dropdown-content" sec:authorize="isAuthenticated()">
-        <div class="user__card__info">Bienvenido, <span th:text="${#authentication.principal.firstName}"></span></span></div>
+        <div class="user__card__info">Bienvenido, <span th:text="${#authentication.principal.username}"></span></div>
         <button class="user__card__btn" id="login__logout">
             Cerrar sesion
         </button>
