@@ -1,11 +1,65 @@
 <script defer th:inline="javascript" th:fragment="_utility_js" xmlns:th="http://www.thymeleaf.org">
-    document.addEventListener("DOMContentLoaded", function(event) {
+    // document.addEventListener("DOMContentLoaded", function(event) {
+    //     document.getElementById('login__logout').addEventListener("click", (e) => {
+    //         e.preventDefault();
+    //         console.log("logout");
+    //         window.location.href = window.location.protocol + "//" + window.location.host + "/logout";
+    //     });
+
+    //     console.log("loaded");
+    // });
+
+
+    try {
         document.getElementById('login__logout').addEventListener("click", (e) => {
             e.preventDefault();
             console.log("logout");
             window.location.href = window.location.protocol + "//" + window.location.host + "/logout";
         });
+    } catch (e) {
+        console.log("no logout handler");
+    }
 
-        console.log("loaded");
-    });
+    try {
+        document.getElementById('login__login').addEventListener("click", (e) => {
+            e.preventDefault();
+            console.log("login");
+            window.location.href = window.location.protocol + "//" + window.location.host + "/login";
+        });
+
+        document.getElementById('login__register').addEventListener("click", (e) => {
+            e.preventDefault();
+            console.log("register");
+            window.location.href = window.location.protocol + "//" + window.location.host + "/register";
+        });
+    } catch (e) {
+        console.log("no logged out fn handlers");
+    }
+    
+
+    try {
+        document.getElementById('user__card__button').addEventListener("click", (e) => {
+            e.preventDefault();
+            document.getElementById('user__card__dropdown').classList.toggle("show");
+        })
+    } catch (e) {
+        console.log("something went wrong");
+    }
+    
+    try {
+        document.onclick = (e) => {
+            if(!e.target.matches('.dropbtn')) {
+                let dropdowns = document.getElementsByClassName('dropdown-content');
+                for(let i = 0; i < dropdowns.length; ++i) {
+                    const openDropdown = dropdowns[i];
+                    if(openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+    } catch (e) {
+        console.log("dropdown handler error")
+    }
+    
 </script>
