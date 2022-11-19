@@ -76,7 +76,7 @@ footer {
 }
 
 .nav__link {
-    color: #fff;
+    color: #fff !important;
     font-weight: bold;
     font-size: 15px;
 }
@@ -215,6 +215,10 @@ login__outer__container {
     height: 65%;
     font-family: 'Gothic A1', sans-serif;
     background: rgba(255, 255, 255, 0.845);
+}
+
+.form-group {
+    text-align: left;
 }
 
 .buttons {

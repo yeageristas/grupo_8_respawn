@@ -15,7 +15,7 @@
       <div class="col-12">
         <div class="card">
           <div class="card-body"> <!--Creamos el formulario en el cardbody-->
-            <form th:action="@{/formulario/juegos/{id}(id=${juegos.id})}" method="post" th:object="${juegos}" enctype="multipart/form-data"> <!--th:videojuego -> actua sobre un objeto de videojuego-->
+            <form th:action="@{/formulario/juegos/{id}(id=${juego.id})}" method="post" th:object="${juego}" enctype="multipart/form-data"> <!--th:videojuego -> actua sobre un objeto de videojuego-->
               <div class="row g-3">
 
                 <div class="form-group col-md-3">
@@ -25,7 +25,7 @@
                 </div>
 
                 <div class="form-group col-md-3">
-                  <label for="categoria">Categoria: </label>
+                  <label for="categoria">Categoría: </label>
                   <select class="form-control" id="categoria" th:field="*{categoria}">
                     <option th:each="categoria: ${categorias}" th:value="${categoria.id}" th:text="${categoria.nombre}"></option>
                   </select>
@@ -50,7 +50,7 @@
 
                 <!--          -->
                 <div class="form-group col-md-12">
-                  <label for="imagenPortada" class="form-label">Imagen Portada: </label>
+                  <label for="imagenPortada" class="form-label">Link de Imagen de Portada: </label>
                   <input type="text" class="form-control" id="imagenPortada" th:field="*{imagenPortada}">
                   <div class="text-danger" th:if="${#fields.hasErrors('imagenPortada')}" th:errors="*{imagenPortada}"></div>
                 </div>
@@ -78,14 +78,14 @@
                 </div>
 
                 <div class="form-group col-md-3">
-                  <label for="fechaLanzamiento">Fecha de Lanzamiento</label>
+                  <label for="fechaLanzamiento">Fecha de Lanzamiento:</label>
                   <input type="date" class="form-control" id="fechaLanzamiento" th:field="*{fechaLanzamiento}">
                   <div class="text-danger" th:if="${#fields.hasErrors('fechaLanzamiento')}" th:errors="*{fechaLanzamiento}"></div>
                 </div>
 
 
                 <div class="form-group col-md-12">
-                  <label for="descripcion">Descripción: </label>
+                  <label for="descripcion">Descripción:</label>
                   <textarea class="form-control" id="descripcion" rows="5" th:field="*{descripcion}"></textarea>
                   <div class="text-danger" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"></div>
                 </div>

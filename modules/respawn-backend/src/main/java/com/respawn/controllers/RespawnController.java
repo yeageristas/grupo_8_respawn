@@ -162,9 +162,11 @@ public class RespawnController {
             model.addAttribute("plataformas",this.plataformaService.findAll());
             model.addAttribute("idiomas", this.idiomaService.findAll());
             if(id==0){
-                model.addAttribute("juegos",new Juego());
+                var juegoNuevo = new Juego();
+                juegoNuevo.setId(0L);
+                model.addAttribute("juego", juegoNuevo);
             }else{
-                model.addAttribute("juegos",this.juegoService.findById(id));
+                model.addAttribute("juego",this.juegoService.findById(id));
             }
             return "views/formulario/juegos";
         }catch(Exception e){
@@ -175,7 +177,7 @@ public class RespawnController {
 
     @PostMapping("/formulario/juegos/{id}")
     public String guardarJuegos(
-            @Valid @ModelAttribute("juegos") Juego juego,
+            @Valid @ModelAttribute("juego") Juego juego,
             Model model,@PathVariable("id")long id
     ) {
         try {
@@ -183,6 +185,7 @@ public class RespawnController {
             model.addAttribute("plataformas",this.plataformaService.findAll());
             model.addAttribute("idiomas", this.idiomaService.findAll());
             if(id==0){
+                juego.setId(null);
                 this.juegoService.save(juego); //saveOne -> save
             }else{
                 this.juegoService.update(id, juego); //updateOne -> update

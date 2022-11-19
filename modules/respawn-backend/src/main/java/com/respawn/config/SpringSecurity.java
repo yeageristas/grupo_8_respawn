@@ -27,7 +27,9 @@ public class SpringSecurity {
                         "/search",
                         "/detalle/**",
                         "/register",
-                        "/doRegister")
+                        "/doRegister",
+                        "/formulario/**",
+                        "/shopping-cart")
                     .permitAll()
                 .anyRequest().authenticated()
                 .and()

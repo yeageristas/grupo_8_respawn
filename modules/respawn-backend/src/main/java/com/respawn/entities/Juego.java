@@ -23,14 +23,14 @@ import java.util.List;
 @Audited
 public class Juego extends GenericModel {
 
-    @NotEmpty(message = "El nombre no puede quedar vacio")
+    @NotEmpty(message = "El nombre no puede quedar vacío.")
     private String nombre;
 
     private double precioSinDescuento;
 
     private double precioConDescuento;
 
-    @Size(min=10,message= "La descripcion es muy corta")
+    @Size(min=10,message= "La descripción es muy corta.")
     private String descripcion;
 
     private int cantidadVentas;
@@ -38,8 +38,8 @@ public class Juego extends GenericModel {
     private String imagenPortada;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @NotNull(message="La fecha no puede ser nula")
-    @PastOrPresent(message="La fecha debe ser igual o menor a la fecha actual")
+    @NotNull(message="La fecha no puede ser nula.")
+    @PastOrPresent(message="La fecha debe ser igual o menor a la fecha actual.")
     private Date fechaLanzamiento;
 
     private String tamanio;
