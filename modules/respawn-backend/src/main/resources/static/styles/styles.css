@@ -331,6 +331,7 @@ login__outer__container {
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
   right: 0;
+  margin-top: 15px;
 }
 
 /* Change color of dropdown links on hover */
