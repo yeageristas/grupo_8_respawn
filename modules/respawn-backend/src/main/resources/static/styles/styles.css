@@ -240,6 +240,23 @@ login__outer__container {
     background: #c73520;
 }
 
+.user__card__dropdown {
+    display: grid;
+}
+
+.user__card__btn {
+    font-size: 12px;
+    height: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.user__card__info {
+    color: #fff;
+    font-size: 12px;
+}
+
 /* Carrito de compra*/
 .progress-steps {
     display: flex;
@@ -293,17 +310,11 @@ login__outer__container {
 
 /* Dropdown Button */
 .dropbtn {
-  background-color: #3498DB;
   color: white;
   padding: 16px;
   font-size: 16px;
   border: none;
   cursor: pointer;
-}
-
-/* Dropdown button on hover & focus */
-.dropbtn:hover, .dropbtn:focus {
-  background-color: #2980B9;
 }
 
 /* The container <div> - needed to position the dropdown content */
@@ -316,10 +327,10 @@ login__outer__container {
 .dropdown-content {
   display: none;
   position: absolute;
-  background-color: #f1f1f1;
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
+  right: 0;
 }
 
 /* Change color of dropdown links on hover */

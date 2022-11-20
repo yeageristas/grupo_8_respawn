@@ -1,19 +1,19 @@
 <div th:fragment="_user_card" class="user__card" xmlns:th="http://www.thymeleaf.org"
 xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-    <button class="dropbtn" id="user__card__button">
+    <button class="dropbtn nav__btn" id="user__card__button">
         <img th:src="@{/img/user_icon.png}" alt="Perfil de usuario" id="user_icon">
     </button>
     <div id="user__card__dropdown" class="dropdown-content" sec:authorize="isAuthenticated()">
-        <div class="user__card__info">Bienvenido, <span th:text="${#authentication.principal.username}"></span></div>
-        <button class="user__card__btn" id="login__logout">
-            Cerrar sesion
+        <div class="user__card__info">Bienvenido/a, <span th:text="${#authentication.principal.username}"></span></div>
+        <button class="user__card__btn buttons" id="login__logout">
+            Cerrar sesión
         </button>
     </div>
     <div id="user__card__dropdown" class="dropdown-content" sec:authorize="isAnonymous()">
-        <button class="user__card__btn" id="login__login">
-            Iniciar sesion
+        <button class="user__card__btn buttons" id="login__login">
+            Iniciar sesión
         </button>
-        <button class="user__card__btn" id="login__register">
+        <button class="user__card__btn buttons" id="login__register">
             Registrarse
         </button>
     </div>
