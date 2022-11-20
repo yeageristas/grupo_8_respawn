@@ -1,12 +1,14 @@
 package com.respawn.entities;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.envers.Audited;
 
 import javax.persistence.Entity;
 import javax.persistence.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -19,13 +21,17 @@ public class Pedido extends GenericModel {
     private double montoTotal;
     private int numeroPedido;
 
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @OneToMany(cascade = CascadeType.ALL)
     private List<PedidoDetalle> listaPedidoDetalle;
     @ManyToOne(cascade = CascadeType.PERSIST)
     private EstadoPedido estadoPedido;
     @ManyToOne
     private Usuario usuario;
-    
+
+    public Pedido(){
+        this.listaPedidoDetalle = new ArrayList<>();
+    }
+
     public void addPedidoDetalle(PedidoDetalle pedidoDetalle) {
         this.listaPedidoDetalle.add(pedidoDetalle);
     }

@@ -221,6 +221,29 @@ login__outer__container {
     text-align: left;
 }
 
+.buttons-detail:hover{
+    cursor: pointer;
+    background-color: #DA300F !important;
+}
+
+#shop-cart-img {
+    max-width: 30px;
+}
+
+#shop-cart-btn {
+    margin-right: 10px;
+    border-radius: 12px;
+    background-color: #EF4027;
+}
+
+#buy-now-btn {
+    background-color: #EF4027;
+    font-family: Gothic A1, sans-serif;
+    color: white;
+    border-radius: 12px;
+    height: 34.1562px
+}
+
 .buttons {
     background: #EF4027;
     text-align: center;

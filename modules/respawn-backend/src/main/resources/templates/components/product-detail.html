@@ -14,12 +14,14 @@
             line-height: 40px;
             margin-top: 0;
             margin-bottom: 10px;">EDICIÓN DIGITAL</p>
-            <p th:text="${juego.precioSinDescuento}" style="font-style: normal;
-            font-weight: 500;
-            font-size: 24px;
-            line-height: 40px;
-            margin-top: 0;
-            margin-bottom: 10px;"></p>
+            <span>
+                <span th:text="${juego.precioSinDescuento}" style="font-style: normal;
+                    font-weight: 500;
+                    font-size: 24px;
+                    line-height: 40px;
+                    margin-top: 0;
+                    margin-bottom: 10px;"></span> ARS
+            </span>
             <p th:text="${juego.descripcion}" style="font-style: normal;
             font-weight: 500;
             font-size: 16px;
@@ -33,12 +35,16 @@
             Entrega inmediata <br>
             </p>
             <div class="buttonsContainer" style="display: flex; flex-direction: row; justify-content: left; margin: 20px 0px">
-                <button type=image src="https://cdn-icons-png.flaticon.com/512/1413/1413908.png" style="border-radius: 12px;
-                background-color:#EF4027">
-                </button>
-                <button style="background-color: #EF4027; font-family: Gothic A1, sans-serif; color:white; border-radius: 12px">
+                <form th:action="@{/agregar/juego/{id}(id=${juego.id})}" method="post" th:object="${juego}">
+                    <button type="submit" class="buttons-detail" id="shop-cart-btn">
+                        <img id= "shop-cart-img" src="https://assets.webiconspng.com/uploads/2017/09/Shopping-Cart-PNG-Image-72455.png">
+                    </button>
+                </form>
+                <form th:action="@{/comprar-ahora/juego/{id}(id=${juego.id})}" method="post" th:object="${juego}">
+                    <button type="submit" class="buttons-detail" id= "buy-now-btn">
                     COMPRAR AHORA
-                </button>
+                    </button>
+                </form>
             </div>
         </div>
     </section>

@@ -46,7 +46,7 @@ public class RespawnController {
         try {
             List<Juego> juegos = this.juegoService.findAllByActivo();
             String role;
-            if(authenticationService.isLoggedIn()) {
+            if (authenticationService.isLoggedIn()) {
                 role = authenticationService.getRolesForUser().get(0);
                 model.addAttribute("role", role);
             } else {
@@ -82,6 +82,7 @@ public class RespawnController {
             return "error";
         }
     }
+
     @GetMapping("/login")
     public String loginHandler(@Nullable Model model) {
         if (authenticationService.isLoggedIn()) {
@@ -103,7 +104,7 @@ public class RespawnController {
         }
     }
 
-    @PostMapping ("/doRegister")
+    @PostMapping("/doRegister")
     public String registerHandler(Model model, @ModelAttribute("usuario") CreateUsuarioRequest usuario) {
         try {
             var pais = this.paisService.findByNombre(usuario.getPais());
@@ -113,7 +114,7 @@ public class RespawnController {
             usuarioNuevo.setRol(rol);
             this.usuarioService.save(usuarioNuevo);
             return "redirect:/";
-        } catch(Exception e) {
+        } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
             return "error";
         }
@@ -132,8 +133,9 @@ public class RespawnController {
             return "error";
         }
     }
+
     @GetMapping(value = "/search")
-    public String busquedaJuego(Model model, @RequestParam(value ="query", required = false) String q) {
+    public String busquedaJuego(Model model, @RequestParam(value = "query", required = false) String q) {
         try {
             List<Juego> juegos = this.juegoService.findByTitle(q);
             model.addAttribute("juegos", juegos);
@@ -144,33 +146,35 @@ public class RespawnController {
             return "error";
         }
     }
+
     @GetMapping("/crud")
-    public String crudVideojuego(Model model){
+    public String crudVideojuego(Model model) {
         try {
             List<Juego> juegos = this.juegoService.findAll(); //activos y no activos
-            model.addAttribute("juegos",juegos);
+            model.addAttribute("juegos", juegos);
             return "views/crud-juego";
-        }catch(Exception e){
+        } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
             return "error";
         }
     }
+
     //FORMULARIO DE VIDEOJUEGOS
     @GetMapping("/formulario/juegos/{id}")
-    public String formularioJuegos(Model model, @PathVariable("id")long id){
+    public String formularioJuegos(Model model, @PathVariable("id") long id) {
         try {
-            model.addAttribute("categorias",this.categoriaService.findAll());
-            model.addAttribute("plataformas",this.plataformaService.findAll());
+            model.addAttribute("categorias", this.categoriaService.findAll());
+            model.addAttribute("plataformas", this.plataformaService.findAll());
             model.addAttribute("idiomas", this.idiomaService.findAll());
-            if(id==0){
+            if (id == 0) {
                 var juegoNuevo = new Juego();
                 juegoNuevo.setId(0L);
                 model.addAttribute("juego", juegoNuevo);
-            }else{
-                model.addAttribute("juego",this.juegoService.findById(id));
+            } else {
+                model.addAttribute("juego", this.juegoService.findById(id));
             }
             return "views/formulario/juegos";
-        }catch(Exception e){
+        } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
             return "error";
         }
@@ -180,45 +184,45 @@ public class RespawnController {
     public String guardarJuegos(
             @Valid @ModelAttribute("juego") Juego juego,
             BindingResult result,
-            Model model,@PathVariable("id")long id
+            Model model, @PathVariable("id") long id
     ) {
         try {
-            model.addAttribute("categorias",this.categoriaService.findAll());
-            model.addAttribute("plataformas",this.plataformaService.findAll());
+            model.addAttribute("categorias", this.categoriaService.findAll());
+            model.addAttribute("plataformas", this.plataformaService.findAll());
             model.addAttribute("idiomas", this.idiomaService.findAll());
-            if(result.hasErrors()){
+            if (result.hasErrors()) {
                 return "views/formulario/juegos";
             }
-            if(id==0){
+            if (id == 0) {
                 juego.setId(null);
                 this.juegoService.save(juego); //saveOne -> save
-            }else{
+            } else {
                 this.juegoService.update(id, juego); //updateOne -> update
             }
             return "redirect:/crud";
-        }catch(Exception e){
+        } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
             return "error";
         }
     }
 
     @GetMapping("/eliminar/juego/{id}")
-    public String eliminarJuegos(Model model, @PathVariable("id")long id){
+    public String eliminarJuegos(Model model, @PathVariable("id") long id) {
         try {
             model.addAttribute("idJuego", id);
             return "views/formulario/eliminar";
-        }catch(Exception e){
+        } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
             return "error";
         }
     }
 
     @PostMapping("/eliminar/juego/{id}")
-    public String desactivarJuego(Model model, @PathVariable("id")long id){
+    public String desactivarJuego(Model model, @PathVariable("id") long id) {
         try {
             this.juegoService.deleteById(id);
             return "redirect:/crud";
-        }catch(Exception e){
+        } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
             System.out.println(e);
             return "error";
@@ -226,11 +230,77 @@ public class RespawnController {
     }
 
     @PostMapping("/eliminar-carrito/juego/{id}")
-    public String eliminarJuegoCarrito(Model model, @PathVariable("id")long id){
+    public String eliminarJuegoCarrito(Model model, @PathVariable("id") long id) {
         try {
             this.pedidoDetalleService.deleteById(id);
             return "redirect:/shopping-cart";
-        }catch(Exception e){
+        } catch (Exception e) {
+            model.addAttribute("error", e.getMessage());
+            System.out.println(e);
+            return "error";
+        }
+    }
+
+    @PostMapping("/agregar/juego/{id}")
+    public String agregarJuegoCarrito(Model model, @PathVariable("id") long id) {
+        try {
+            // Sweet Child O' Mine
+            final String userEmail = authenticationService.getUserEmail();
+            var usuario = usuarioService.findByEmail(userEmail);
+            var pedido = pedidoService.findPedidoByUser(usuario.get().getId());
+            Juego juego = this.juegoService.findById(id);
+            if (pedido.isPresent()) {
+                PedidoDetalle pedidoDetalle = new PedidoDetalle();
+                pedidoDetalle.setJuego(juego);
+                pedidoDetalle.setCantidad(1);
+                pedidoDetalle.setMontoSubtotal(juego.getPrecioSinDescuento());
+                pedidoService.save(pedido.get(), pedidoDetalle);
+            } else {
+                var pedidoNuevo = new Pedido();
+                EstadoPedido estadoPedido = new EstadoPedido("Pendiente");
+                PedidoDetalle pedidoDetalle = new PedidoDetalle();
+                pedidoDetalle.setJuego(juego);
+                pedidoNuevo.setEstadoPedido(estadoPedido);
+                pedidoNuevo.setUsuario(usuario.get());
+                pedidoDetalle.setCantidad(1);
+                pedidoDetalle.setMontoSubtotal(juego.getPrecioSinDescuento());
+                pedidoService.save(pedidoNuevo, pedidoDetalle);
+            }
+            return "redirect:/";
+        } catch (Exception e) {
+            model.addAttribute("error", e.getMessage());
+            System.out.println(e);
+            return "error";
+        }
+    }
+
+    @PostMapping("/comprar-ahora/juego/{id}")
+    public String comprarAhora(Model model, @PathVariable("id") long id) {
+        try {
+            // Sweet Child O' Mine
+            final String userEmail = authenticationService.getUserEmail();
+            var usuario = usuarioService.findByEmail(userEmail);
+            var pedido = pedidoService.findPedidoByUser(usuario.get().getId());
+            Juego juego = this.juegoService.findById(id);
+            if (pedido.isPresent()) {
+                PedidoDetalle pedidoDetalle = new PedidoDetalle();
+                pedidoDetalle.setJuego(juego);
+                pedidoDetalle.setCantidad(1);
+                pedidoDetalle.setMontoSubtotal(juego.getPrecioSinDescuento());
+                pedidoService.save(pedido.get(), pedidoDetalle);
+            } else {
+                var pedidoNuevo = new Pedido();
+                EstadoPedido estadoPedido = new EstadoPedido("Pendiente");
+                PedidoDetalle pedidoDetalle = new PedidoDetalle();
+                pedidoDetalle.setJuego(juego);
+                pedidoNuevo.setEstadoPedido(estadoPedido);
+                pedidoNuevo.setUsuario(usuario.get());
+                pedidoDetalle.setCantidad(1);
+                pedidoDetalle.setMontoSubtotal(juego.getPrecioSinDescuento());
+                pedidoService.save(pedidoNuevo, pedidoDetalle);
+            }
+            return "redirect:/shopping-cart";
+        } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
             System.out.println(e);
             return "error";
