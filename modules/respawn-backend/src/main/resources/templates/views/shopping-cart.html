@@ -55,32 +55,43 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-lg-12">
-                    <table class="table" style="margin: 0 auto;" >
+                    <table class="table" >
                         <thead>
                             <tr>
-                                <th scope="col">BORRAR</th>
-                                <th scope="col">PRODUCTO</th>
-                                <th scope="col">CANTIDAD</th>
-                                <th scope="col">PRECIO</th>
+                                <th class="col-lg-1" scope="col">BORRAR</th>
+                                <th class="col-lg-2" scope="col"></th>
+                                <th class="col-lg-3" scope="col">PRODUCTO</th>
+                                <th class="col-lg-2" scope="col">CANTIDAD</th>
+                                <th class="col-lg-2" scope="col">PRECIO UNITARIO</th>
+                                <th class="col-lg-2" scope="col">SUBTOTAL</th>
                             </tr>
                             </thead>
                             <tbody>
                                 <tr th:each="detalle : ${detalles}" th:if="${detalles != null || detalles.size()}">
-                                    <td> <!--Acciones-->
+                                    <td> <!--Borrar-->
                                         <a th:href="@{/eliminar-carrito/juego/{id}(id=${detalle.id})}">
-                                            <img th:src="@{/img/delete_icon.png}">
+                                            <img th:src="@{/img/delete_icon.png}" width="30px">
                                         </a>
                                     </td>
-                                    <!--Detalle pedido-->
-                                    <td th:text="${detalle.juego.nombre}">
-                                        <img th:src="${detalle.juego.imagenPortada}" alt="Imagen del juego">
+                                    <!--Imagen-->
+                                    <td>
+                                        <div style="text-align: center;">
+                                            <a th:href="@{detalle/{id}(id=${detalle.juego.id})}" >
+                                                <img th:src="${detalle.juego.imagenPortada}" alt="Imagen del juego" style="width:80px;">
+                                            </a>
+                                        </div>
                                     </td>
+                                    <!--Nombre-->
+                                    <td th:text="${detalle.juego.nombre}" style="vertical-align:middle; horiz-align: left; font-weight: bold; font-size: 20px"></td>
                                     <!--Cantidad-->
                                     <td>
-                                        <input type="number" name="quantity">
+                                        <input type="number" name="quantity"style="width:100px; text-align:center" min="1" max="10" >
                                     </td>
-                                    <!--Precio-->
-                                    <td th:text="${detalle.juego.precioSinDescuento} + ' ARS'"></td>
+                                    <!--Precio unitario-->
+                                    <td th:text="${detalle.juego.precioSinDescuento} + ' ARS'" style="vertical-align: middle"></td>
+                                    <!--Subtotal-->
+                                    <td th:text="${detalle.montoSubtotal} + ' ARS'" style="vertical-align: middle"></td>
+
                                 </tr>
                             </tbody>
                     </table>
