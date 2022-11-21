@@ -60,6 +60,25 @@ public class RespawnController {
             return "error";
         }
     }
+    @GetMapping("/ofertas")
+    public String ofertas (Model model){
+        try{
+            List<Juego> juegos = this.juegoService.findAllByActivo();
+            String role;
+            List<Juego> juegosOferta = new ArrayList<Juego>();
+            for(Juego juego :juegos) {
+                if (juego.isOferta()){
+                    juegosOferta.add(juego);
+                }
+            }
+            model.addAttribute("juegos", juegosOferta);
+            return "views/ofertas";
+
+        }catch (Exception e) {
+            model.addAttribute("error", e.getMessage());
+            return "error";
+        }
+    }
 
     @GetMapping("/shopping-cart")
     public String shoppingCart(Model model) {
