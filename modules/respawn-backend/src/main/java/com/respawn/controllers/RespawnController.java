@@ -83,6 +83,11 @@ public class RespawnController {
         }
     }
 
+    @GetMapping("/shopping-cart2")
+    public String shoppingCart2(Model model) {
+        return "views/shopping-cart-2";
+    }
+
     @GetMapping("/login")
     public String loginHandler(@Nullable Model model) {
         if (authenticationService.isLoggedIn()) {
@@ -229,10 +234,17 @@ public class RespawnController {
         }
     }
 
-    @PostMapping("/eliminar-carrito/juego/{id}")
+    @GetMapping("/eliminar-carrito/juego/{id}")
     public String eliminarJuegoCarrito(Model model, @PathVariable("id") long id) {
         try {
-            this.pedidoDetalleService.deleteById(id);
+            var pedido = this.pedidoService.findPedidoByPedidoDetalle(id);
+            if(pedido.isPresent()) {
+                var pedidoDetalle = this.pedidoDetalleService.findById(id);
+                pedido.get().getListaPedidoDetalle().remove(pedidoDetalle);
+                pedidoService.save(pedido.get());
+                pedidoDetalleService.deleteById(id);
+            }
+
             return "redirect:/shopping-cart";
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());

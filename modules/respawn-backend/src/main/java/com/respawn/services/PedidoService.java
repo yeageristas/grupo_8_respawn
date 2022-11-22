@@ -33,6 +33,8 @@ public class PedidoService extends GenericService<Pedido> implements PedidoTrans
         this.pedidoRepository.save(p);
     }
 
+    public Optional<Pedido> findPedidoByPedidoDetalle(Long id) { return pedidoRepository.findPedidoByPedidoDetalleId(id) ;}
+
     public Optional<Pedido> findPedidoByUser(Long id) {
         return pedidoRepository.findPedidoByUser(id);
     }
