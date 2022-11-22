@@ -284,18 +284,26 @@ public class RespawnController {
             var pedido = pedidoService.findPedidoByUser(usuario.get().getId());
             Juego juego = this.juegoService.findById(id);
             if (pedido.isPresent()) {
-                PedidoDetalle pedidoDetalle = new PedidoDetalle();
-                pedidoDetalle.setJuego(juego);
-                pedidoDetalle.setCantidad(cantidad);
-                pedidoDetalle.setMontoSubtotal(juego.getPrecioSinDescuento()*pedidoDetalle.getCantidad()); //precio*cantidad
-
-                //validar que le producto no se añada 2 veces
+                //validar que el producto no se añada 2 veces
                 Long idProducto= juego.getId();
                 boolean ingresado=pedido.get().getListaPedidoDetalle().stream().anyMatch(p -> p.getJuego().getId()==idProducto);
                 if (!ingresado) {
+                    PedidoDetalle pedidoDetalle = new PedidoDetalle();
+                    pedidoDetalle.setJuego(juego);
+                    pedidoDetalle.setCantidad(cantidad);
+                    pedidoDetalle.setMontoSubtotal(juego.getPrecioSinDescuento()*pedidoDetalle.getCantidad());
                     pedidoService.save(pedido.get(), pedidoDetalle);
                 }
                 else{
+                    for(PedidoDetalle  pDet : pedido.get().getListaPedidoDetalle()) {
+                        if (pDet.getJuego().getId() == id){ //detalle que sea del mismo juego
+                            var idDet = pDet.getId();
+                            pDet.setCantidad(pDet.getCantidad() + cantidad );
+                            pDet.setMontoSubtotal(juego.getPrecioSinDescuento()*pDet.getCantidad());
+                            pedidoDetalleService.update(idDet, pDet);
+                            break;
+                        }
+                    }
 
                 }
 
@@ -306,7 +314,7 @@ public class RespawnController {
                 pedidoDetalle.setJuego(juego);
                 pedidoNuevo.setEstadoPedido(estadoPedido);
                 pedidoNuevo.setUsuario(usuario.get());
-                pedidoDetalle.setCantidad(1);
+                pedidoDetalle.setCantidad(cantidad);
                 pedidoDetalle.setMontoSubtotal(juego.getPrecioSinDescuento()*pedidoDetalle.getCantidad());
                 pedidoService.save(pedidoNuevo, pedidoDetalle);
             }

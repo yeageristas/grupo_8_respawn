@@ -89,26 +89,33 @@
                                     <!--Precio unitario-->
                                     <td th:text="${detalle.juego.precioSinDescuento} + ' ARS'" style="vertical-align: middle"></td>
                                     <!--Subtotal-->
-                                    <td th:text="${detalle.montoSubtotal} + ' ARS'" style="vertical-align: middle"></td>
+                                    <td th:text="${detalle.montoSubtotal} + ' ARS'" th:value="0" style="vertical-align: middle"></td>
 
                                 </tr>
                             </tbody>
                     </table>
                 </div>
-                <p th:unless="${detalles != null || detalles.size()}">El carrito se encuentra vacío.</p>
+
                 </div>
+            <div>
+                <p th:unless="${detalles.size() != 0}" style="font-size: 20px; color: red; text-align: center" >El carrito se encuentra vacío!!!</p>
+            </div>
             </div>
         </div>
-    <div class="col-lg-12">
-        <div>
-            <h6 align = left>TOTAL DEL CARRITO</h6>
-            <h6 align = right th:text="${total}" th:if="${total}">0 </h6>
-        </div>
-        <div>
-            <a th:href="@{/}" class="buttons"> Continuar </a>
-        </div>
 
-    </div>
+        <div class="col-lg-12">
+            <table class="table" >
+                <thead>
+                <tr>
+                    <th class="col-lg-10" scope="col" style=" font-weight:bold; font-size: 18px;">TOTAL DEL CARRITO</th>
+                    <th class="col-lg-2" scope="col" style=" font-weight:bold; font-size: 18px;" text-align="right" th:text="${total} + 'ARS'" th:if="${total}">0 ></th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+        <div style="display: flex; justify-content: center;">
+            <th class="col-lg-12" scope="col"><a th:href="@{/}" class="buttons" > Continuar </a></th>
+        </div>
     </section>
 </main>
 <footer th:replace="components/footer"></footer>
