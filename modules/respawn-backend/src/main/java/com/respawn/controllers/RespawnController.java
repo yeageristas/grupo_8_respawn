@@ -335,11 +335,29 @@ public class RespawnController {
             var pedido = pedidoService.findPedidoByUserPendiente(usuario.get().getId()); //Modificado
             Juego juego = this.juegoService.findById(id);
             if (pedido.isPresent()) {
-                PedidoDetalle pedidoDetalle = new PedidoDetalle();
-                pedidoDetalle.setJuego(juego);
-                pedidoDetalle.setCantidad(1);
-                pedidoDetalle.setMontoSubtotal(juego.getPrecioSinDescuento());
-                pedidoService.save(pedido.get(), pedidoDetalle);
+                //validar que el producto no se añada 2 veces
+                Long idProducto= juego.getId();
+                boolean ingresado=pedido.get().getListaPedidoDetalle().stream().anyMatch(p -> p.getJuego().getId()==idProducto);
+                if (!ingresado) {
+                    PedidoDetalle pedidoDetalle = new PedidoDetalle();
+                    pedidoDetalle.setJuego(juego);
+                    pedidoDetalle.setCantidad(1);
+                    pedidoDetalle.setMontoSubtotal(juego.getPrecioSinDescuento()*pedidoDetalle.getCantidad());
+                    pedidoService.save(pedido.get(), pedidoDetalle);
+                }
+                else{
+                    for(PedidoDetalle  pDet : pedido.get().getListaPedidoDetalle()) {
+                        if (pDet.getJuego().getId() == id){ //detalle que sea del mismo juego
+                            var idDet = pDet.getId();
+                            pDet.setCantidad(pDet.getCantidad() + 1 );
+                            pDet.setMontoSubtotal(juego.getPrecioSinDescuento()*pDet.getCantidad());
+                            pedidoDetalleService.update(idDet, pDet);
+                            break;
+                        }
+                    }
+
+                }
+
             } else {
                 var pedidoNuevo = new Pedido();
                 EstadoPedido estadoPedido = new EstadoPedido("Pendiente");
@@ -347,8 +365,10 @@ public class RespawnController {
                 pedidoDetalle.setJuego(juego);
                 pedidoNuevo.setEstadoPedido(estadoPedido);
                 pedidoNuevo.setUsuario(usuario.get());
+                //MOdificado
+                pedidoNuevo.setNumeroPedido("0");
                 pedidoDetalle.setCantidad(1);
-                pedidoDetalle.setMontoSubtotal(juego.getPrecioSinDescuento());
+                pedidoDetalle.setMontoSubtotal(juego.getPrecioSinDescuento()*pedidoDetalle.getCantidad());
                 pedidoService.save(pedidoNuevo, pedidoDetalle);
             }
             return "redirect:/shopping-cart";
