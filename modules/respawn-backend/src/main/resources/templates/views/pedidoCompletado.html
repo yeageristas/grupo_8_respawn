@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+  <title>Respawn - Detalle del pago</title>
+  <link rel="shortcut icon" type="image/png" th:href="@{/img/respawn_logo.PNG}"/>
+  <link rel="stylesheet" type="text/css" th:href="@{styles/styles.css}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+
+
+
+</head>
+<body>
+<nav th:replace="components/navbar :: _navbar"></nav>
+
+<main>
+
+  <section >
+    <div aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page">Inicio</li>
+        <li class="breadcrumb-item active"aria-current="page">Carrito de compras</li>
+        <li class="breadcrumb-item active" aria-current="page">Detalles del pedido</li>
+        <li class="breadcrumb-item active" aria-current="page">Compra realizada</li>
+      </ol>
+    </div>
+  </section>
+
+  <div class="progress-steps">
+
+        <span class="step active">
+        <span class="number">1</span>
+        <span class="text">CARRITO</span>
+
+        <span class="spacer"></span>
+        </span>
+
+    <span class="step active">
+        <span class="number">2</span>
+        <span class="text">DETALLES DEL PEDIDO</span>
+
+        <span class="spacer"></span>
+        </span>
+
+    <span class="step active">
+        <span class="number">3</span>
+        <span class="text">PEDIDO COMPLETADO</span>
+
+        <span class="spacer"></span>
+        </span>
+
+  </div>
+    <br><br>
+  <section>
+    <div class="container">
+      <div class="jumbotron">
+        <div style="display: flex; justify-content: center;">
+          <img th:src="@{/img/carritoDeCompra.png}" alt="carritoCompra" width="200px">
+        </div>
+        <h1 class="display-4" style="text-align: center">GRACIAS POR SU COMPRA!!!</h1>
+        <p class="lead" style="text-align: center;">Por cualquier consulta no dude en comunicarse con nosotros.</p>
+        <hr class="my-4">
+        <p style="text-align: center;">Envíenos un mail (<b> raspawan@gmail.com </b> ) o llámenos al <b>0343456</b></p>
+        <div style="display: flex; justify-content: center;">
+        <p class="lead">
+          <a class="buttons" th:href="@{/}"  style="text-decoration: none;"> Seguir comprando </a>
+        </p>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+</main>
+<footer th:replace="components/footer"></footer>
+<!-- Bootstrap core JavaScript -->
+<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+</body>
+<script defer th:replace="components/utility-js-functionality :: _utility_js"></script>
+
+</html>

@@ -79,7 +79,7 @@ public class PedidoController {
 			pedido.setEstadoPedido(new EstadoPedido(p.getEstadoPedido().getNombre()));
 			pedido.setFecha(p.getFecha());
 			pedido.setMontoTotal(p.getMontoTotal());
-			pedido.setNumeroPedido(p.getNumeroPedido());
+			pedido.setNumeroPedido(String.valueOf(p.getNumeroPedido())); //CAST
 			pedido.setUsuario(usuarioService.findById(p.getUsuarioId()));
 
 			PedidoDetalle pedidoDetalle = new PedidoDetalle();
@@ -105,7 +105,7 @@ public class PedidoController {
 			pedido.setEstadoPedido(p.getEstadoPedido());
 			pedido.setFecha(p.getFecha());
 			pedido.setMontoTotal(p.getMontoTotal());
-			pedido.setNumeroPedido(p.getNumeroPedido());
+			pedido.setNumeroPedido(String.valueOf(p.getNumeroPedido())); //CAST
 			pedido.setUsuario(usuarioService.findById(p.getUsuarioId()));
 
 			PedidoDetalle pedidoDetalle = new PedidoDetalle();

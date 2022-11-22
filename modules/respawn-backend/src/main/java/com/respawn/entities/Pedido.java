@@ -19,7 +19,7 @@ import java.util.List;
 public class Pedido extends GenericModel {
     private Date fecha;
     private double montoTotal;
-    private int numeroPedido;
+    private String numeroPedido;
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<PedidoDetalle> listaPedidoDetalle;

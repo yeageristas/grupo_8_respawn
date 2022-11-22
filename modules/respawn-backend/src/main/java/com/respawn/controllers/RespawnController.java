@@ -83,7 +83,7 @@ public class RespawnController {
         try {
             final String userEmail = authenticationService.getUserEmail();
             var usuario = usuarioService.findByEmail(userEmail);
-            var pedido = this.pedidoService.findPedidoByUser(usuario.get().getId());
+            var pedido = this.pedidoService.findPedidoByUserPendiente(usuario.get().getId());
 
             if (pedido.isPresent()) {
                 model.addAttribute("detalles", pedido.get().getListaPedidoDetalle());
@@ -279,7 +279,7 @@ public class RespawnController {
             // Sweet Child O' Mine
             final String userEmail = authenticationService.getUserEmail();
             var usuario = usuarioService.findByEmail(userEmail);
-            var pedido = pedidoService.findPedidoByUser(usuario.get().getId());
+            var pedido = pedidoService.findPedidoByUserPendiente(usuario.get().getId()); //Modificado
             Juego juego = this.juegoService.findById(id);
             if (pedido.isPresent()) {
                 //validar que el producto no se añada 2 veces
@@ -312,6 +312,8 @@ public class RespawnController {
                 pedidoDetalle.setJuego(juego);
                 pedidoNuevo.setEstadoPedido(estadoPedido);
                 pedidoNuevo.setUsuario(usuario.get());
+                //MOdificado
+                pedidoNuevo.setNumeroPedido("0");
                 pedidoDetalle.setCantidad(cantidad);
                 pedidoDetalle.setMontoSubtotal(juego.getPrecioSinDescuento()*pedidoDetalle.getCantidad());
                 pedidoService.save(pedidoNuevo, pedidoDetalle);
@@ -330,7 +332,7 @@ public class RespawnController {
             // Sweet Child O' Mine
             final String userEmail = authenticationService.getUserEmail();
             var usuario = usuarioService.findByEmail(userEmail);
-            var pedido = pedidoService.findPedidoByUser(usuario.get().getId());
+            var pedido = pedidoService.findPedidoByUserPendiente(usuario.get().getId()); //Modificado
             Juego juego = this.juegoService.findById(id);
             if (pedido.isPresent()) {
                 PedidoDetalle pedidoDetalle = new PedidoDetalle();
@@ -361,7 +363,7 @@ public class RespawnController {
     public String detallePedido(Model model){
             final String userEmail = authenticationService.getUserEmail();
             var usuario = usuarioService.findByEmail(userEmail);
-            var pedido = pedidoService.findPedidoByUser(usuario.get().getId());
+            var pedido = pedidoService.findPedidoByUserPendiente(usuario.get().getId()); //Modificado
 
             model.addAttribute("detalles",  pedido.get().getListaPedidoDetalle());
             model.addAttribute("pedido", pedido.get());
@@ -373,5 +375,38 @@ public class RespawnController {
         return "views/detallesDelPedido";
     }
 
+    //se guarda la orden de la compra realizada
+    @GetMapping("/compraRealizada")
+    public String compraRealizada() throws Exception {
+        final String userEmail = authenticationService.getUserEmail();
+        var usuario = usuarioService.findByEmail(userEmail);
+        Pedido pedidoRealizado = new Pedido();
+        var pedidoPendiente = pedidoService.findPedidoByUserPendiente(usuario.get().getId()); //Modificado
+
+        Date fechaCreacion = new Date();
+        EstadoPedido estadoPedido = new EstadoPedido("Realizado");
+        pedidoRealizado.setFecha(fechaCreacion);
+        pedidoRealizado.setNumeroPedido(pedidoService.generarNumeroOrden());
+        pedidoRealizado.setEstadoPedido(estadoPedido);
+        var total = pedidoPendiente.get().calcularMontoTotal();
+        pedidoRealizado.setMontoTotal(total);
+        pedidoRealizado.setUsuario(usuario.get());
+        ///limpiar lista y orden
+        pedidoPendiente.get().getListaPedidoDetalle().clear();
+        //usuario
+        pedidoService.save(pedidoRealizado);
+        return "views/pedidoCompletado";
+    }
+    //Compras del usuario
+    @GetMapping("/compras")
+    public String obtenerCompras(Model model) {
+        final String userEmail = authenticationService.getUserEmail();
+        var usuario = usuarioService.findByEmail(userEmail);
+
+        List<Pedido> ordenes= pedidoService.findByUsuario(usuario.get().getId());
+        model.addAttribute("pedidos", ordenes);
+
+        return "views/compras";
+    }
 
 }
