@@ -83,10 +83,9 @@
                                     </td>
                                     <!--Nombre-->
                                     <td th:text="${detalle.juego.nombre}" style="vertical-align:middle; horiz-align: left; font-weight: bold; font-size: 20px"></td>
+
                                     <!--Cantidad-->
-                                    <td>
-                                        <input type="number" name="quantity"style="width:100px; text-align:center" min="1" max="10" >
-                                    </td>
+                                    <td th:text="${detalle.cantidad}" style="vertical-align: middle"></td>
                                     <!--Precio unitario-->
                                     <td th:text="${detalle.juego.precioSinDescuento} + ' ARS'" style="vertical-align: middle"></td>
                                     <!--Subtotal-->

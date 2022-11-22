@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -55,6 +56,25 @@ public class RespawnController {
             model.addAttribute("juegos", juegos);
             return "views/home";
         } catch (Exception e) {
+            model.addAttribute("error", e.getMessage());
+            return "error";
+        }
+    }
+    @GetMapping("/ofertas")
+    public String ofertas (Model model){
+        try{
+            List<Juego> juegos = this.juegoService.findAllByActivo();
+            String role;
+            List<Juego> juegosOferta = new ArrayList<Juego>();
+            for(Juego juego :juegos) {
+                if (juego.isOferta()){
+                    juegosOferta.add(juego);
+                }
+            }
+            model.addAttribute("juegos", juegosOferta);
+            return "views/ofertas";
+
+        }catch (Exception e) {
             model.addAttribute("error", e.getMessage());
             return "error";
         }
@@ -130,7 +150,9 @@ public class RespawnController {
         try {
             var juego = this.juegoService.findById(id);
             var juegos = this.juegoService.findAllByActivo();
-            model.addAttribute("juego", juego);
+            model.addAttribute("juegoDetalle", juego);
+            model.addAttribute("categoria", juego.getCategoria().getNombre());
+            model.addAttribute("plataforma", juego.getPlataforma().getNombre());
             model.addAttribute("juegos", juegos);
             return "views/product-detail-view.html";
         } catch (Exception e) {
@@ -254,7 +276,7 @@ public class RespawnController {
     }
 
     @PostMapping("/agregar/juego/{id}")
-    public String agregarJuegoCarrito(Model model, @PathVariable("id") long id) {
+    public String agregarJuegoCarrito(Model model, @PathVariable("id") long id, @RequestParam Integer cantidad) {
         try {
             // Sweet Child O' Mine
             final String userEmail = authenticationService.getUserEmail();
@@ -264,9 +286,19 @@ public class RespawnController {
             if (pedido.isPresent()) {
                 PedidoDetalle pedidoDetalle = new PedidoDetalle();
                 pedidoDetalle.setJuego(juego);
-                pedidoDetalle.setCantidad(1);
-                pedidoDetalle.setMontoSubtotal(juego.getPrecioSinDescuento());
-                pedidoService.save(pedido.get(), pedidoDetalle);
+                pedidoDetalle.setCantidad(cantidad);
+                pedidoDetalle.setMontoSubtotal(juego.getPrecioSinDescuento()*pedidoDetalle.getCantidad()); //precio*cantidad
+
+                //validar que le producto no se añada 2 veces
+                Long idProducto= juego.getId();
+                boolean ingresado=pedido.get().getListaPedidoDetalle().stream().anyMatch(p -> p.getJuego().getId()==idProducto);
+                if (!ingresado) {
+                    pedidoService.save(pedido.get(), pedidoDetalle);
+                }
+                else{
+
+                }
+
             } else {
                 var pedidoNuevo = new Pedido();
                 EstadoPedido estadoPedido = new EstadoPedido("Pendiente");
@@ -275,7 +307,7 @@ public class RespawnController {
                 pedidoNuevo.setEstadoPedido(estadoPedido);
                 pedidoNuevo.setUsuario(usuario.get());
                 pedidoDetalle.setCantidad(1);
-                pedidoDetalle.setMontoSubtotal(juego.getPrecioSinDescuento());
+                pedidoDetalle.setMontoSubtotal(juego.getPrecioSinDescuento()*pedidoDetalle.getCantidad());
                 pedidoService.save(pedidoNuevo, pedidoDetalle);
             }
             return "redirect:/";
