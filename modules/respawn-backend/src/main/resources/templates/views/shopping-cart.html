@@ -35,7 +35,7 @@
 
         <span class="step ">
         <span class="number">2</span>
-        <span class="text">DETALLES DEL PAGO</span>
+        <span class="text">DETALLES DEL PEDIDO</span>
 
         <span class="spacer"></span>
         </span>
@@ -87,9 +87,9 @@
                                     <!--Cantidad-->
                                     <td th:text="${detalle.cantidad}" style="vertical-align: middle"></td>
                                     <!--Precio unitario-->
-                                    <td th:text="${detalle.juego.precioSinDescuento} + ' ARS'" style="vertical-align: middle"></td>
+                                    <td th:text="'$ '+${detalle.juego.precioSinDescuento} + ' ARS'" style="vertical-align: middle"></td>
                                     <!--Subtotal-->
-                                    <td th:text="${detalle.montoSubtotal} + ' ARS'" th:value="0" style="vertical-align: middle"></td>
+                                    <td th:text="'$ '+${detalle.montoSubtotal} + ' ARS'" th:value="0" style="vertical-align: middle"></td>
 
                                 </tr>
                             </tbody>
@@ -108,13 +108,13 @@
                 <thead>
                 <tr>
                     <th class="col-lg-10" scope="col" style=" font-weight:bold; font-size: 18px;">TOTAL DEL CARRITO</th>
-                    <th class="col-lg-2" scope="col" style=" font-weight:bold; font-size: 18px;" text-align="right" th:text="${total} + 'ARS'" th:if="${total}">0 ></th>
+                    <th class="col-lg-2" scope="col" style=" font-weight:bold; font-size: 18px;" text-align="right" th:text="'$ '+${total} + 'ARS'" th:if="${total}">0 ></th>
                 </tr>
                 </thead>
             </table>
         </div>
         <div style="display: flex; justify-content: center;">
-            <th class="col-lg-12" scope="col"><a th:href="@{/}" class="buttons" > Continuar </a></th>
+            <th class="col-lg-12" scope="col"><a th:href="@{/detallePedido}" class="buttons" > Continuar </a></th>
         </div>
     </section>
 </main>

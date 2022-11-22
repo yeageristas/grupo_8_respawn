@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Respawn - Detalle del pago</title>
+    <link rel="shortcut icon" type="image/png" th:href="@{/img/respawn_logo.PNG}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{styles/styles.css}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+
+
+</head>
+<body>
+<nav th:replace="components/navbar :: _navbar"></nav>
+
+<main>
+
+    <section >
+        <div aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a th:href="@{/}">Inicio</a></li>
+                <li class="breadcrumb-item"><a th:href="@{/shopping-cart}">Carrito de compras</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Detalles del pedido</li>
+            </ol>
+        </div>
+    </section>
+
+    <div class="progress-steps">
+
+        <span class="step active">
+        <span class="number">1</span>
+        <span class="text">CARRITO</span>
+
+        <span class="spacer"></span>
+        </span>
+
+        <span class="step active">
+        <span class="number">2</span>
+        <span class="text">DETALLES DEL PEDIDO</span>
+
+        <span class="spacer"></span>
+        </span>
+
+        <span class="step">
+        <span class="number">3</span>
+        <span class="text last">PEDIDO COMPLETADO</span>
+        </span>
+
+    </div>
+
+    <div >
+        <a class="buttons" th:href="@{/}"  style="text-decoration: none;"> Seguir comprando </a>
+    </div>
+    <section>
+
+    <div class="container">
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-9">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            DATOS DEL PEDIDO
+                        </h5>
+                        <h6 th:text=" 'Nombre y Apellido: '+ ${usuario.nombreApellido}" style="text-align: left"> </h6>
+                        <h6 th:text="'Correo: '+  ${usuario.email}" style="text-align: left"></h6>
+                        <h6 th:text="'Pais: '+ ${pais}" style="text-align: left"></h6>
+
+                        <h5 class="card-title">
+                            PRODUCTOS
+                        </h5>
+                        <div class="alert alert-light" role="alert">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Producto</th>
+                                    <th scope="col">Precio</th>
+                                    <th scope="col">Cantidad</th>
+                                    <th scope="col">SubTotal</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="dtorden:${detalles}">
+                                    <td th:text="${dtorden.juego.nombre}"></td>
+                                    <td th:text="${dtorden.juego.precioSinDescuento}"></td>
+                                    <td th:text="${dtorden.cantidad}"></td>
+                                    <td th:text="'$'+${dtorden.montoSubtotal} +' ARS'"></td>
+
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div class="col-lg-3">
+                    <h2 class="card-title">Resumen del pedido</h2>
+
+                    <ul class="list-group">
+                        <li class="list-group-item"><h5 th:text=" 'Total: $'+ ${total} + ' ARS'"> </h5></li>
+                        <a th:href="@{/detallePedido}" class="btn btn-dark">Generar</a>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    </section>
+<!-- /.container -->
+
+<!-- Footer -->
+</main>
+<footer th:replace="components/footer"></footer>
+<!-- Bootstrap core JavaScript -->
+<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+</body>
+<script defer th:replace="components/utility-js-functionality :: _utility_js"></script>
+
+</html>
