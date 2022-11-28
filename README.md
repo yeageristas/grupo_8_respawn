@@ -16,6 +16,9 @@ Nuestra audiencia objetivo seran aquellas personas que poseen una consola de tip
 
 Facilitando el acceso de juegos digitales a traves de una tienda digital alternativa para aquellas personas que no tienen los medios posibles como para adquirir juegos a través de la tienda de PlayStation.
 
+### Link de Videos
+https://www.youtube.com/watch?v=1esYombl0dE
+https://www.youtube.com/watch?v=Ii77UOMBLHc
 
 ### Integrantes del equipo
 
